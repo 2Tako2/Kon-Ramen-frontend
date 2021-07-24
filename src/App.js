@@ -7,6 +7,7 @@ import Navbar from './components/navbar/Navbar.js';
 import HomePage from './pages/HomePage.js'
 import ItemMenu from './components/ItemMenu.js';
 import ItemForm from './pages/ItemForm.js';
+import CategoryForm from './pages/CategoryForm.js';
 import UserForm from './pages/UserForm.js';
 import LoginForm from './pages/LoginForm.js';
 
@@ -78,6 +79,11 @@ function App() {
             <ItemForm />
           </Route>
           
+          {/* Route for editing or creating category */}
+          <Route path='/category'>
+            <CategoryForm />
+          </Route>
+
           {/* Route for redirection */}
           <Route><Redirect to='/' /></Route>
         </Switch>

@@ -49,7 +49,6 @@ export default function ItemForm(props) {
         <Main>
             <Header>{props.editing ? 'Edit Item' : 'Crete Item'}</Header>
             <Form>
-                <input type='checkbox' />
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'
@@ -78,8 +77,16 @@ export default function ItemForm(props) {
                     label='Category :'
                     name='category'
                     onChange={() => console.log('category')}
-                    options={categories}
+                    options={[
+                        {name: "1",
+                        _id: 123},
+                        {name: "3",
+                        _id: 34},
+                        {name: "2",
+                        _id: 113}
+                    ]}
                 />
+                {console.log(categories)}
 
                 <TextAreaInput
                     name='description'
