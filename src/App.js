@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer, useState, useEffect} from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import './App.css';
 
@@ -11,20 +11,27 @@ import UserForm from './pages/UserForm.js';
 import LoginForm from './pages/LoginForm.js';
 
 // Importing reducers
-import { initialOrder, reducer } from './useReducer/orderReducer.js';
+import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
 import { User } from './useReducer/userReducer.js';
-import { categories, itemList } from './useReducer/menuReducer';
+
+import data1 from './data/data.js';
 
 // Exporting orderContext
 export const OrderContext = React.createContext();
 
 function App() {
-  const [order, dispatch] = useReducer(reducer, initialOrder);
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [order, orderDispatch] = useReducer(orderReducer, initialOrder);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    setCategories(["Main", "Topping", "Side", "Drink"]);
+    setItems(data1);
+  },[])
 
   return (
     <OrderContext.Provider
-      value={{ orderState: order, orderDispatch: dispatch}}
+      value={{ orderState: order, orderDispatch: orderDispatch}}
     >
       {/* {console.log(order)} */}
       <BrowserRouter className='App'>
@@ -42,7 +49,7 @@ function App() {
           {/* Route for ordering */}
           <Route exact path='/order'>
             <ItemMenu
-              itemList={itemList}
+              itemList={items}
               categories={categories}
             />
           </Route>

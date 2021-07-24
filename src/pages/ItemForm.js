@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+
 import { TextInput, TextAreaInput, NumberInput, CheckBoxInput, FormBtn, SelectInput, FileUpload } from '../components/formComponents.js';
 
 const Main = styled.main`
@@ -25,22 +27,41 @@ const Form = styled.form`
 
 
 export default function ItemForm(props) {
+
+    // const [form, setForm] = useState({
+    //     published: true,
+    //     itemName: '',
+    //     unitPrice: 0,
+    //     description: ''
+    // });
+
+    const [categories, setCategories] = useState('');
+    // const [thumbnail, setThumbnail] = useState('');
+
+    useEffect(() => {
+        //fetch categories 
+        axios.get('http://localhost:5000/categories/')
+            .then(res => setCategories(res.data))
+            .catch(err => console.log(err))
+    }, [])
+
     return (
         <Main>
             <Header>{props.editing ? 'Edit Item' : 'Crete Item'}</Header>
             <Form>
+                <input type='checkbox' />
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'
                     labelRight='Publish'
-                    value={props.item.published}
+                    // value={props.item.published}
                 />
 
                 <TextInput
                     label='Item Name :'
                     name='itemName'
                     onChange={() => console.log('itemName')}
-                    value={props.item.itemName}
+                    // value={props.item.itemName}
                     placeholder='Please insert item name'
                 />
 
@@ -48,7 +69,7 @@ export default function ItemForm(props) {
                     label='Unit Price :'
                     name='unitPrice'
                     onChange={() => console.log('unitPrice')}
-                    value={props.item.unitPrice}
+                    // value={props.item.unitPrice}
                     placeholder='Please insert unit price'
                     step={0.05}
                 />
@@ -57,37 +78,19 @@ export default function ItemForm(props) {
                     label='Category :'
                     name='category'
                     onChange={() => console.log('category')}
-                    // This need to be updated later  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-                    options={[
-                        {
-                            label: 'Main',
-                            value: 'Main'
-                        },
-                        {
-                            label: 'Side',
-                            value: 'Side'
-                        },
-                        {
-                            label: 'Topping',
-                            value: 'Topping'
-                        },
-                        {
-                            label: 'Drink',
-                            value: 'Drink'
-                        }
-                    ]}
+                    options={categories}
                 />
 
                 <TextAreaInput
                     name='description'
                     label='Description :'
                     placeholder='Description of the item...'
-                    value={props.item.description}
+                    // value={props.item.description}
                 />
 
                 <FileUpload
                     label="Upload thumbnail :"
-                    value={props.item.value}
+                    // value={props.item.value}
                 />
 
                 <br />

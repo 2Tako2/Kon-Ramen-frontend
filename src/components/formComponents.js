@@ -194,9 +194,9 @@ export function FormBtn(props){
 }
 
 export function SelectInput(props){
-    const options = props.options.map( (option, index) => 
-        <Option key={index} value={option.value}>{option.label}</Option>    
-    )
+    // const options = props.options.map( (option, index) => 
+    //     <Option key={index} value={option._id}>{option.name}</Option>    
+    // )
 
     return(
         <Wrapper>
@@ -204,7 +204,7 @@ export function SelectInput(props){
             <Error>{props.errorMsg}</Error>
             <Select name={props.name} defaultValue={props.value ? props.value : '-- Select --'}>
                 <option disabled>-- Select --</option>
-                {options}
+                {/* {options} */}
             </Select>
         </Wrapper>
     )

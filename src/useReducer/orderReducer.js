@@ -24,7 +24,7 @@ export const ACTIONS = {
 }
 
 
-export const reducer = (order, action) => {
+export const orderReducer = (order, action) => {
     switch (action.type) {
         case ACTIONS.TOGGLE_STATUS:
             return order;
@@ -60,10 +60,10 @@ export const reducer = (order, action) => {
               orderItems: [
                 ...order.orderItems,
                 {
-                  itemId: action.value.itemId,
                   name: action.value.name,
                   qty: action.value.qty,
-                  unitPrice: action.value.unitPrice
+                  unitPrice: action.value.unitPrice,
+                  ready: false
                 }
               ]
             }
