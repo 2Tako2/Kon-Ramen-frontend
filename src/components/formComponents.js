@@ -177,6 +177,8 @@ export function CheckBoxInput(props){
                 type='checkbox'
                 name={props.name}
                 defaultValue={props.value}
+                onChange={props.onChange}
+                value={true}
                 />
             <Label>{props.labelRight}</Label>
         </CenterWrapper>
@@ -204,7 +206,11 @@ export function SelectInput(props){
         <Wrapper>
             <Label>{props.label}</Label>
             <Error>{props.errorMsg}</Error>
-            <Select name={props.name} defaultValue={props.value ? props.value : '-- Select --'}>
+            <Select
+                name={props.name}
+                defaultValue={props.value ? props.value : '-- Select --'}
+                onChange={props.onChange}
+            >
                 <option disabled>-- Select --</option>
                 {options}
             </Select>

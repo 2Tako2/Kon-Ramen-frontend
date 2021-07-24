@@ -28,47 +28,61 @@ const Form = styled.form`
 
 export default function ItemForm(props) {
 
-    // const [form, setForm] = useState({
-    //     published: true,
-    //     itemName: '',
-    //     unitPrice: 0,
-    //     description: ''
-    // });
+    const [form, setForm] = useState({
+        published: true,
+        name: '',
+        unitPrice: 0,
+        description: ''
+    });
 
-    const [categories, setCategories] = useState('');
-    // const [thumbnail, setThumbnail] = useState('');
+    const [categories, setCategories] = useState([
+        {name: "Main", _id: "60fbabcf0deddc060ef4ba12"},
+        {name: "Topping", _id: "60fbb0c00deddc060ef4ba25"},
+        {name: "Side", _id: "60fbb0c50deddc060ef4ba27"},
+        {name: "Drink", _id: "60fbb0c90deddc060ef4ba29"},
+    ]);
+    const [thumbnail, setThumbnail] = useState('');
 
     useEffect(() => {
         //fetch categories 
-        axios.get('http://localhost:5000/categories/')
-            .then(res => setCategories(res.data))
-            .catch(err => console.log(err))
+        // axios.get('http://localhost:5000/categories/')
+        //     .then(res => setCategories(res.data))
+        //     .catch(err => console.log(err))
     }, [])
+
+    const createItem = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:5000/items', form)
+            .then( res => console.log(`Successfully created ${form.name} item`))
+            .catch(err => console.log(err));
+    }
 
     return (
         <Main>
             <Header>{props.editing ? 'Edit Item' : 'Crete Item'}</Header>
-            <Form>
+            {console.log(form)}
+            <Form onSubmit={createItem}>
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'
                     labelRight='Publish'
-                    // value={props.item.published}
+                    onChange={(e) => setForm({...form, published: e.target.checked})}
+                    value={form.published}
                 />
 
                 <TextInput
                     label='Item Name :'
                     name='itemName'
-                    onChange={() => console.log('itemName')}
-                    // value={props.item.itemName}
+                    onChange={(e) => setForm({...form, name: e.target.value})}
+                    value={form.name}
                     placeholder='Please insert item name'
                 />
 
                 <NumberInput
                     label='Unit Price :'
                     name='unitPrice'
-                    onChange={() => console.log('unitPrice')}
-                    // value={props.item.unitPrice}
+                    onChange={(e) => setForm({...form, unitPrice: e.target.value})}
+                    value={form.unitPrice}
                     placeholder='Please insert unit price'
                     step={0.05}
                 />
@@ -76,28 +90,20 @@ export default function ItemForm(props) {
                 <SelectInput
                     label='Category :'
                     name='category'
-                    onChange={() => console.log('category')}
-                    options={[
-                        {name: "1",
-                        _id: 123},
-                        {name: "3",
-                        _id: 34},
-                        {name: "2",
-                        _id: 113}
-                    ]}
+                    onChange={(e) => setForm({...form, category: e.target.value})}
+                    options={categories}
                 />
-                {console.log(categories)}
 
                 <TextAreaInput
                     name='description'
                     label='Description :'
                     placeholder='Description of the item...'
-                    // value={props.item.description}
+                    onChange={(e) => setForm({...form, description: e.target.value})}
+                    value={form.description}
                 />
 
                 <FileUpload
                     label="Upload thumbnail :"
-                    // value={props.item.value}
                 />
 
                 <br />
