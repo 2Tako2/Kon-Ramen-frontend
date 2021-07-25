@@ -90,8 +90,13 @@ const Option = styled.option`
 
 const TextArea = styled.textarea`
     padding: 3px;
+    margin: 0 5px 10px 5px;
     font-size: 0.8rem;
     height: 100px;
+`;
+
+const Upload = styled.input`
+    margin: 0 5px 10px 5px;
 `;
 
 export function TextInput(props){
@@ -155,6 +160,7 @@ export function EmailInput(props){
             <TextField 
                 type='email'
                 name={props.name}
+                defaultValue={props.value}
                 onChange={props.onChange}
                 placeholder={props.placeholder}
                 required
@@ -170,6 +176,8 @@ export function CheckBoxInput(props){
             <CheckBoxField 
                 type='checkbox'
                 name={props.name}
+                onChange={props.onChange}
+                value={true}
                 />
             <Label>{props.labelRight}</Label>
         </CenterWrapper>
@@ -188,14 +196,18 @@ export function FormBtn(props){
 
 export function SelectInput(props){
     const options = props.options.map( (option, index) => 
-        <Option key={index} value={option.value}>{option.label}</Option>    
+        <Option key={index} value={option._id}>{option.name}</Option>    
     )
-
+    
     return(
         <Wrapper>
             <Label>{props.label}</Label>
             <Error>{props.errorMsg}</Error>
-            <Select name={props.name} defaultValue={props.value ? props.value : '-- Select --'}>
+            <Select
+                name={props.name}
+                defaultValue={props.value ? props.value : '-- Select --'}
+                onChange={props.onChange}
+            >
                 <option disabled>-- Select --</option>
                 {options}
             </Select>
@@ -211,6 +223,19 @@ export function TextAreaInput(props){
                 name={props.name}
                 placeholder={props.placeholder}
                 defaultValue={props.value}
+                onChange={props.onChange}
+            />
+        </Wrapper>
+    )
+}
+
+export function FileUpload(props){
+    return(
+        <Wrapper>
+            <Label>{props.label}</Label>
+            <Upload
+                type="file"
+                name={props.name}
                 onChange={props.onChange}
             />
         </Wrapper>

@@ -56,7 +56,6 @@ export default function ItemCard(props) {
             return orderContext.orderDispatch({
                 type: ACTIONS.ADD_ITEM_TO_ORDER,
                 value: {
-                    itemId: props.itemId,
                     name: props.name,
                     unitPrice: props.unitPrice,
                     qty: 1

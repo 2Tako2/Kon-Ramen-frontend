@@ -17,6 +17,7 @@ export default function HomePage() {
             <Link to='/order'>ORDER NOW</Link>
             <Link to='/user'>User</Link>
             <Link to='/item'>Item (not working)</Link>
+            <Link to='/category'>Category</Link>
         </Main>
     )
 }
