@@ -1,5 +1,5 @@
 import React, {useReducer, useState, useEffect} from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Redirect, Link} from 'react-router-dom'
 import './App.css';
 import axios from 'axios';
 
@@ -49,9 +49,17 @@ function App() {
         value={{ orderState: order, orderDispatch: orderDispatch}}
       >
         <BrowserRouter className='App'>
+
           <button onClick={() => setLoggedIn(!loggedIn)}>
             {loggedIn ? 'Log out' : 'Log in'}
           </button>
+          <Link to='/user'>User</Link>
+          <br />
+          <Link to='/item'>Item</Link>
+          <br />
+          <Link to='/category'>Category</Link>
+
+
           <Navbar user={User} loggedIn={loggedIn}/>
           <Switch className='main-content'>
 
