@@ -23,7 +23,7 @@ const TextField = styled.input`
 `;
 
 export default function SpecialInstruction() {
-    const orderContext= useContext(OrderContext)
+    const orderContext= useContext(OrderContext);
 
     return (
         <Container>

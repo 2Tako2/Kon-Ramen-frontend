@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import { TextInput, FormBtn } from '../components/formComponents.js';
+import { CheckBoxInput, TextInput, FormBtn } from '../components/formComponents.js';
 
 const Main = styled.main`
     width: 100vw;
@@ -26,7 +26,7 @@ const Form = styled.form`
 
 export default function ItemForm(props) {
 
-    const [category, setCategory] = useState({ "name": "" })
+    const [category, setCategory] = useState({ "name": "", "published": false })
     
     const postCategory = (e) => {
         e.preventDefault();
@@ -39,10 +39,17 @@ export default function ItemForm(props) {
         <Main>
             <Header>{props.editing ? 'Edit Category' : 'Crete Category'}</Header>
             <Form onSubmit={postCategory}>
+                <CheckBoxInput
+                    name='published'
+                    labelLeft='Hidden'
+                    labelRight='Publish'
+                    onChange={(e) => setCategory({...category, published: e.target.checked})}
+                    value={category.published}
+                />
                 <TextInput
                     label='Category Name :'
                     name='name'
-                    onChange={(e) => setCategory({[e.target.name]: e.target.value})}
+                    onChange={(e) => setCategory({...category, name: e.target.value})}
                     placeholder='Please insert category name'
                 />
                 <br />
