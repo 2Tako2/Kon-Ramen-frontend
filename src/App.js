@@ -25,16 +25,17 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
+
   useEffect(() => {
     setCategories(["Main", "Topping", "Side", "Drink"]);
     setItems(data1);
   },[])
 
+  
   return (
     <OrderContext.Provider
       value={{ orderState: order, orderDispatch: orderDispatch}}
     >
-      {/* {console.log(order)} */}
       <BrowserRouter className='App'>
         <button onClick={() => setLoggedIn(!loggedIn)}>
           {loggedIn ? 'Log out' : 'Log in'}

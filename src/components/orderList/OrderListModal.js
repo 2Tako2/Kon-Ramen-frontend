@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import './OrderListModal.css';
 import { OrderContext } from '../../App';
 import { ACTIONS } from '../../useReducer/orderReducer.js';
+import axios from 'axios';
 
 
 import Modal from 'react-modal';
@@ -19,18 +20,14 @@ export default function OrderListModal(props) {
                 index={index}
                 name={item.name}
                 unitPrice={item.unitPrice}
-                qty={item.qty}
+                // qty={item.qty}
                 addHandler={() => orderContext.orderDispatch({
-                        type: ACTIONS.ADD_ITEM_BY_N,
+                        type: ACTIONS.ADD_ITEM_TO_ORDER,
                         value: {
-                            index: index,
-                            qty: 1
+                            name: item.name,
+                            unitPrice: item.unitPrice
                         }
                     })}
-                subtractHandler={() => orderContext.orderDispatch({
-                    type: ACTIONS.SUBTRACT_ITEM_BY_1,
-                    value: index
-                })}
                 removeHandler={() => orderContext.orderDispatch({
                     type: ACTIONS.REMOVE_ITEM_FROM_ORDER,
                     value: index
@@ -60,9 +57,9 @@ export default function OrderListModal(props) {
                     <button
                         className='confirm-btn'
                         onClick={() =>
-                            orderContext.orderDispatch({
-                                type: ACTIONS.TOGGLE_TAKEAWAY  
-                            })
+                            axios.post('http://localhost:5000/orders/', orderContext.orderState)
+                                .then(res => console.log(res))
+                                .catch(err => console.log(err))
                         }
                     >MAKE PAYMENT</button>
                 </div>
