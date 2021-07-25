@@ -35,32 +35,39 @@ export default function ItemForm(props) {
         description: ''
     });
 
-    const [categories, setCategories] = useState([
-        {name: "Main", _id: "60fbabcf0deddc060ef4ba12"},
-        {name: "Topping", _id: "60fbb0c00deddc060ef4ba25"},
-        {name: "Side", _id: "60fbb0c50deddc060ef4ba27"},
-        {name: "Drink", _id: "60fbb0c90deddc060ef4ba29"},
-    ]);
+    const [categories, setCategories] = useState([]);
     const [thumbnail, setThumbnail] = useState('');
 
-    useEffect(() => {
-        //fetch categories 
-        // axios.get('http://localhost:5000/categories/')
-        //     .then(res => setCategories(res.data))
-        //     .catch(err => console.log(err))
+
+    // Fetching Categories options from database
+    useEffect(() => { 
+        axios.get('http://localhost:5000/categories/')
+            .then(res => setCategories(...categories, res.data))
     }, [])
 
     const createItem = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/items', form)
-            .then( res => console.log(`Successfully created ${form.name} item`))
-            .catch(err => console.log(err));
+        let itemFormData = new FormData();
+        itemFormData.append('published', form.published)
+        itemFormData.append('name', form.name)
+        itemFormData.append('unitPrice', form.unitPrice)
+        itemFormData.append('description', form.description)
+        itemFormData.append('thumbnail', thumbnail)
+        itemFormData.append('category', form.category)
+        console.log(itemFormData.entries())
+        fetch('http://localhost:5000/items/', {
+            method: "POST",
+            body: itemFormData
+        })
+        .then(res => res.json())
+        // axios.post('http://localhost:5000/items', itemFormData)
+        //     .then( res => console.log(`Successfully created ${form.name} item`))
+        //     .catch(err => console.log(err));
     }
 
     return (
         <Main>
             <Header>{props.editing ? 'Edit Item' : 'Crete Item'}</Header>
-            {console.log(form)}
             <Form onSubmit={createItem}>
                 <CheckBoxInput
                     name='published'
@@ -104,6 +111,8 @@ export default function ItemForm(props) {
 
                 <FileUpload
                     label="Upload thumbnail :"
+                    name={thumbnail}
+                    onChange={(e) => setThumbnail(e.target.files[0])}
                 />
 
                 <br />

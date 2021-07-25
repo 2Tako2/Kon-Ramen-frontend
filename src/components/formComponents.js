@@ -176,7 +176,6 @@ export function CheckBoxInput(props){
             <CheckBoxField 
                 type='checkbox'
                 name={props.name}
-                defaultValue={props.value}
                 onChange={props.onChange}
                 value={true}
                 />
@@ -199,8 +198,6 @@ export function SelectInput(props){
     const options = props.options.map( (option, index) => 
         <Option key={index} value={option._id}>{option.name}</Option>    
     )
-
-    // const render = props.options.map( option => console.log("this"))
     
     return(
         <Wrapper>
@@ -236,7 +233,11 @@ export function FileUpload(props){
     return(
         <Wrapper>
             <Label>{props.label}</Label>
-            <Upload type="file" />
+            <Upload
+                type="file"
+                name={props.name}
+                onChange={props.onChange}
+            />
         </Wrapper>
     )
 }
