@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
-import RenderCategoryNav from './RenderCategoryNav';
-import ShoppingCart from '../orderList/ShoppingCart.js';
+import {AiOutlineShoppingCart} from 'react-icons/ai';
+import { MenuContext } from '../../App.js';
 
 const MenuContainer = styled.div`
-    width: 90vw;
+    width: 97vw;
     max-width: 900px;
     display: flex;
     margin: auto;
@@ -23,15 +23,41 @@ const Categories = styled.ul`
     background-color: #fff;
 `;
 
+const Category = styled.li`
+    list-style: none;
+    font-size: 1.3rem;
+    
+    & a{
+        text-decoration: none;
+        color: #000;
+    }
+`;
+
+const ShoppingCartIcon = styled.button`
+    font-size: 2.7rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+`;
+
 export default function MenuNav(props){
+    const menuContext = useContext(MenuContext);
+
     return(
         <MenuContainer>
-                    <Categories>
-                        <RenderCategoryNav categories={props.categories} />
-                    </Categories>
-                    <ShoppingCart 
-                        openModal={props.openOrderListModal}
-                    />
+            <Categories>
+                {/* Rendering categories */}
+                {menuContext.menuState.map(category => (
+                    <Category key={category._id}>
+                        <a href={`#${category.name}`}>
+                            {category.name}
+                        </a>
+                    </Category>
+                ))}
+            </Categories>
+            <ShoppingCartIcon onClick={props.openModal}>
+                <AiOutlineShoppingCart />
+            </ShoppingCartIcon>
         </MenuContainer>
     )
-}
+};
