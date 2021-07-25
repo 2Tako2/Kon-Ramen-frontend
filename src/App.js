@@ -25,11 +25,23 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
+
   useEffect(() => {
     setCategories(["Main", "Topping", "Side", "Drink"]);
     setItems(data1);
   },[])
 
+  // useEffect(() => {
+  //   const subTotal = 0;
+  //   order.orderItems.map(item => {
+  //     subTotal = subTotal + (item.qty * item.unitPrice)
+  //   })
+  //   orderDispatch({
+  //     type: ACTIONS.UPDATE_SUB_COST,
+  //     value: subTotal
+  //   })
+  // },[order.orderItems])
+  
   return (
     <OrderContext.Provider
       value={{ orderState: order, orderDispatch: orderDispatch}}

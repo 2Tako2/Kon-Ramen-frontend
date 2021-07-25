@@ -48,29 +48,29 @@ export default function ItemCard(props) {
     const orderContext = useContext(OrderContext);
     const [itemModal, setItemModal] = useState(false);
 
-    const addAction = () =>{
-        let index = orderContext.orderState.orderItems.findIndex( item =>
-            item.itemId === props.itemId    
-        )
-        if (index === -1) {
-            return orderContext.orderDispatch({
-                type: ACTIONS.ADD_ITEM_TO_ORDER,
-                value: {
-                    name: props.name,
-                    unitPrice: props.unitPrice,
-                    qty: 1
-                }
-            })
-        } else {
-            return orderContext.orderDispatch({
-                type: ACTIONS.ADD_ITEM_BY_N,
-                value: {
-                    index: index,
-                    qty: 1
-                }
-            })
-        }
-    }
+    // const addAction = () =>{
+    //     let index = orderContext.orderState.orderItems.findIndex( item =>
+    //         item.itemId === props.itemId    
+    //     )
+    //     if (index === -1) {
+    //         return orderContext.orderDispatch({
+    //             type: ACTIONS.ADD_ITEM_TO_ORDER,
+    //             value: {
+    //                 name: props.name,
+    //                 unitPrice: props.unitPrice,
+    //                 qty: 1
+    //             }
+    //         })
+    //     } else {
+    //         return orderContext.orderDispatch({
+    //             type: ACTIONS.ADD_ITEM_BY_N,
+    //             value: {
+    //                 index: index,
+    //                 qty: 1
+    //             }
+    //         })
+    //     }
+    // }
 
     return (
         <ItemCardContainer>
@@ -90,7 +90,14 @@ export default function ItemCard(props) {
             <ItemPrice>AUD $ {props.unitPrice}</ItemPrice>
             <Button 
                 content="ADD +"
-                onClick={() => addAction()}
+                onClick={() => orderContext.orderDispatch({
+                    type: ACTIONS.ADD_ITEM,
+                    value: {
+                        name: props.name,
+                        qty: 1,
+                        unitPrice: props.unitPrice
+                    }
+                })}
             />
         </ItemCardContainer>
     )

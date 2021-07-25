@@ -35,6 +35,18 @@ export default function OrderListModal(props) {
                     type: ACTIONS.REMOVE_ITEM_FROM_ORDER,
                     value: index
                 })}
+
+                addItem={() => orderContext.orderDispatch({
+                    type: ACTIONS.ADD_ITEM,
+                    value: {
+                        name: item.name,
+                        qty: 1
+                    }
+                })}
+                subtractItem={() => orderContext.orderDispatch({
+                    type: ACTIONS.SUBTRACT_ITEM,
+                    value: index
+                })}
             />
     )
 

@@ -56,22 +56,22 @@ export default function PaymentSummary(props) {
             <SummaryContainer>
                 <SubContainer>
                     <P>SUBTOTAL</P>
-                    <P>AUD $ *missing*</P>
+                    <P>AUD $ {orderContext.orderState.subTotal.toFixed(2)}</P>
                 </SubContainer>
                 <SubContainer>
                     <P>SERVICE CHARGE</P>
-                    <P>AUD $ {orderContext.orderState.serviceCharge}</P>
+                    <P>AUD $ {(orderContext.orderState.subTotal===0) ? (0).toFixed(2) : orderContext.orderState.serviceCharge.toFixed(2)}</P>
                 </SubContainer>
                 <SubContainer>
                     <P>GST (INCL) 10%</P>
-                    <P>AUD $ *missing*</P>
+                    <P>AUD $ {(orderContext.orderState.subTotal * 0.1).toFixed(2)}</P>
                 </SubContainer>
             </SummaryContainer>
             }
             <Hr />
             <SubContainer>
                 <H4>TOTAL PAYMENT</H4>
-                <H4>AUD $ 30.20</H4>
+                <H4>AUD $ {(orderContext.orderState.subTotal===0) ? (0).toFixed(2) : (orderContext.orderState.subTotal + orderContext.orderState.serviceCharge).toFixed(2)}</H4>
             </SubContainer>
         </Container>
     )
