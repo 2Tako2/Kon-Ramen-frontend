@@ -28,6 +28,8 @@ const TextField = styled.input`
     margin: 0 5px 10px 5px;
     width: 95%;
     max-width: 250px;
+    border: none;
+    border-bottom: 2px solid #000;
 `;
 
 const CheckBoxField = styled.input`
