@@ -87,14 +87,13 @@ export default function ItemCard(props) {
                 <ItemThumbnail src={props.thumbnail} alt='item thumbnail'/>
             </ItemThumbnailBtn>
             <ItemName>{props.name}</ItemName>
-            <ItemPrice>AUD $ {props.unitPrice}</ItemPrice>
+            <ItemPrice>AUD $ {(props.unitPrice/100).toFixed(2)}</ItemPrice>
             <Button 
                 content="ADD +"
                 onClick={() => orderContext.orderDispatch({
-                    type: ACTIONS.ADD_ITEM,
+                    type: ACTIONS.ADD_ITEM_TO_ORDER,
                     value: {
                         name: props.name,
-                        qty: 1,
                         unitPrice: props.unitPrice
                     }
                 })}

@@ -31,22 +31,11 @@ function App() {
     setItems(data1);
   },[])
 
-  // useEffect(() => {
-  //   const subTotal = 0;
-  //   order.orderItems.map(item => {
-  //     subTotal = subTotal + (item.qty * item.unitPrice)
-  //   })
-  //   orderDispatch({
-  //     type: ACTIONS.UPDATE_SUB_COST,
-  //     value: subTotal
-  //   })
-  // },[order.orderItems])
   
   return (
     <OrderContext.Provider
       value={{ orderState: order, orderDispatch: orderDispatch}}
     >
-      {/* {console.log(order)} */}
       <BrowserRouter className='App'>
         <button onClick={() => setLoggedIn(!loggedIn)}>
           {loggedIn ? 'Log out' : 'Log in'}
