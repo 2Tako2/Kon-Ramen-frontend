@@ -67,7 +67,7 @@ export default function ItemForm(props) {
 
     return (
         <Main>
-            <Header>{props.editing ? 'Edit Item' : 'Crete Item'}</Header>
+            <Header>{props.editing ? 'Edit Item' : 'Create Item'}</Header>
             <Form onSubmit={createItem}>
                 <CheckBoxInput
                     name='published'
