@@ -99,6 +99,7 @@ export default function ItemForm(props) {
                     name='category'
                     onChange={(e) => setItem({...item, category: e.target.value})}
                     options={menuContext.menuState}
+                    value={item.category}
                 />
 
                 <TextAreaInput
