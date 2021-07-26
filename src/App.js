@@ -26,20 +26,52 @@ function App() {
 
   // Define reducers
   const [order, orderDispatch] = useReducer(orderReducer, initialOrder);
-  const [menu, menuDispatch] = useReducer(menuReducer, []);
   
-  const [loggedIn, setLoggedIn] = useState(false);
+  ////////////////////////////// Order ////////////////////////////////////
+  const [menu, menuDispatch] = useReducer(menuReducer, []);
   
   useEffect(() => {
     axios.get('http://localhost:5000/categories/')
-      .then(res => 
-        menuDispatch({
-          type: MENU_ACTIONS.LOAD_MENU,
-          value: res.data
-        })
+    .then(res => 
+      menuDispatch({
+        type: MENU_ACTIONS.LOAD_MENU,
+        value: res.data
+      })
       )
-  },[])
+    },[])
+  ///////////////////////// End of Order //////////////////////////////////
+    
 
+  ////////////////////////////// User ////////////////////////////////////
+    const [loggedIn, setLoggedIn] = useState(false);
+  
+    const [authenticate, setAuthenticate] = useState(false)
+    const [user, setUser] = useState(null)
+  
+    useEffect(() => {
+      axios.get('http://localhost:5000/user', {
+        credentials: 'include'
+      })
+        .then(data => data.json())
+        .then(user => {
+          setAuthenticate(true)
+          setUser(user)
+        })
+        .catch(err => alert(err))
+    }, [])
+
+    const handleLogout = () => {
+      axios.get('http://localhost:5000/logout', {
+        credentials: 'include'
+      })
+        .then(() => {
+          setAuthenticate(false);
+          setUser(null);
+          alert('Logged out')
+        })
+        .catch(err => alert(err))
+    }
+  /////////////////////// End of User ////////////////////////////////////
   
   return (
     <MenuContext.Provider
