@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-
+import { MenuContext } from '../App.js';
 import { TextInput, TextAreaInput, NumberInput, CheckBoxInput, FormBtn, SelectInput, FileUpload } from '../components/formComponents.js';
+import axios from 'axios';
 
 const Main = styled.main`
     width: 100vw;
@@ -27,42 +27,42 @@ const Form = styled.form`
 
 
 export default function ItemForm(props) {
+    const menuContext = useContext(MenuContext);
 
-    const [form, setForm] = useState({
+    const [item, setItem] = useState({
         published: true,
         name: '',
         unitPrice: 0,
         description: ''
     });
-
-    const [categories, setCategories] = useState([]);
     const [thumbnail, setThumbnail] = useState('');
 
-
-    // Fetching Categories options from database
-    useEffect(() => { 
-        axios.get('http://localhost:5000/categories/')
-            .then(res => setCategories(...categories, res.data))
-    }, [])
+    const clearItem = () => {
+        setItem({
+            published: true,
+            name: '',
+            unitPrice: 0,
+            description: ''
+        })
+    }
 
     const createItem = (e) => {
         e.preventDefault();
         let itemFormData = new FormData();
-        itemFormData.append('published', form.published)
-        itemFormData.append('name', form.name)
-        itemFormData.append('unitPrice', form.unitPrice)
-        itemFormData.append('description', form.description)
+        itemFormData.append('published', item.published)
+        itemFormData.append('name', item.name)
+        itemFormData.append('unitPrice', item.unitPrice)
+        itemFormData.append('description', item.description)
         itemFormData.append('thumbnail', thumbnail)
-        itemFormData.append('category', form.category)
-        console.log(itemFormData.entries())
-        fetch('http://localhost:5000/items/', {
-            method: "POST",
-            body: itemFormData
-        })
-        .then(res => res.json())
-        // axios.post('http://localhost:5000/items', itemFormData)
-        //     .then( res => console.log(`Successfully created ${form.name} item`))
-        //     .catch(err => console.log(err));
+        itemFormData.append('category', item.category)
+
+        axios.post('http://localhost:5000/items', itemFormData)
+            .then( res => {
+                clearItem();
+                window.location = '/';
+                alert(`Successfully created ${item.name} item`);
+            })
+            .catch(err => alert(err));
     }
 
     return (
@@ -73,23 +73,23 @@ export default function ItemForm(props) {
                     name='published'
                     labelLeft='Hidden'
                     labelRight='Publish'
-                    onChange={(e) => setForm({...form, published: e.target.checked})}
-                    value={form.published}
+                    onChange={(e) => setItem({...item, published: e.target.checked})}
+                    value={item.published}
                 />
 
                 <TextInput
                     label='Item Name :'
                     name='itemName'
-                    onChange={(e) => setForm({...form, name: e.target.value})}
-                    value={form.name}
+                    onChange={(e) => setItem({...item, name: e.target.value})}
+                    value={item.name}
                     placeholder='Please insert item name'
                 />
 
                 <NumberInput
                     label='Unit Price :'
                     name='unitPrice'
-                    onChange={(e) => setForm({...form, unitPrice: e.target.value})}
-                    value={form.unitPrice}
+                    onChange={(e) => setItem({...item, unitPrice: e.target.value})}
+                    value={item.unitPrice}
                     placeholder='Please insert unit price'
                     step={0.05}
                 />
@@ -97,21 +97,21 @@ export default function ItemForm(props) {
                 <SelectInput
                     label='Category :'
                     name='category'
-                    onChange={(e) => setForm({...form, category: e.target.value})}
-                    options={categories}
+                    onChange={(e) => setItem({...item, category: e.target.value})}
+                    options={menuContext.menuState}
                 />
 
                 <TextAreaInput
                     name='description'
                     label='Description :'
                     placeholder='Description of the item...'
-                    onChange={(e) => setForm({...form, description: e.target.value})}
-                    value={form.description}
+                    onChange={(e) => setItem({...item, description: e.target.value})}
+                    value={item.description}
                 />
 
                 <FileUpload
-                    label="Upload thumbnail :"
-                    name={thumbnail}
+                    label='Upload thumbnail :'
+                    name='thumbnail'
                     onChange={(e) => setThumbnail(e.target.files[0])}
                 />
 

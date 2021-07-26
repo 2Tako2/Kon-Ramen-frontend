@@ -74,6 +74,7 @@ export default function ItemCard(props) {
 
     return (
         <ItemCardContainer>
+            {console.log(props)}
             <ItemModal
                 isOpen={itemModal}
                 closeModal={() => setItemModal(false)}

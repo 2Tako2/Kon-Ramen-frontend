@@ -27,13 +27,22 @@ const Form = styled.form`
 export default function ItemForm(props) {
 
     const [category, setCategory] = useState({ "name": "", "published": false })
+
+    const clearCategory = () => {
+        setCategory({ "name": "", "published": false })
+    }
     
     const postCategory = (e) => {
         e.preventDefault();
         axios.post('http://localhost:5000/categories/', category)
-            .then( res => console.log(`Successfully created ${category.name} category`))
-            .catch( err => console.log(err))
+            .then( res => {
+                clearCategory();
+                window.location = '/';
+                alert(`Successfully created ${category.name} category`);
+            })
+            .catch( err => alert(err))
     }
+
 
     return (
         <Main>
@@ -51,6 +60,7 @@ export default function ItemForm(props) {
                     name='name'
                     onChange={(e) => setCategory({...category, name: e.target.value})}
                     placeholder='Please insert category name'
+                    value={category.name}
                 />
                 <br />
                 <FormBtn value='Submit'/>

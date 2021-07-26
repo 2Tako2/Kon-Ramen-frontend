@@ -19,24 +19,21 @@ const CategoryContainer = styled.div`
 export default function RenderItemCards() {
     const menuContext = useContext(MenuContext)
 
-
-    ///////////////
-    //this filters out the categories with no items
-    ///////////////
-    // return menuContext.menuState.filter(category => category.items.length > 0).map((category) => (
-    return menuContext.menuState.map((category) => (
+    ////////// This filters out the not published categories with no items  
+    return menuContext.menuState.filter(category => (category.published === true) && (category.items.length > 0)).map((category) => (
         <div key={category._id}>
+            {console.log(category)}
             <CategoryTitle id={category.name}>{category.name}</CategoryTitle>
             <CategoryContainer>
                 {
-                    category.items.filter(items => items.length > 0).map( item => (
+                    category.items.map( item => (
                         <ItemCard
                             key={item._id}
                             itemId={item._id}
                             name={item.name}
                             unitPrice={item.unitPrice}
                             description={item.description}
-                            thumbnail={item.thumbnail}
+                            thumbnail={item.thumbnailUrl}
                         />
                     ))
                 }

@@ -14,7 +14,7 @@ export default function OrderingPage() {
     const [openOrderList, setOpenOrderList] = useState(false)
     return (
         <Main>
-            <MenuNav openModel={() => setOpenOrderList(true)} />
+            <MenuNav openModal={() => setOpenOrderList(true)} />
             <RenderItemCards />
             <OrderListModal
                 isOpen={openOrderList}

@@ -110,7 +110,7 @@ export function TextInput(props){
                 type='text'
                 name={props.name}
                 onChange={props.onChange}
-                defaultValue={props.value}
+                value={props.value}
                 placeholder={props.placeholder}
                 required
             />
@@ -143,7 +143,7 @@ export function NumberInput(props){
                 type='number'
                 name={props.number}
                 onChange={props.onChange}
-                defaultValue={props.value}
+                value={props.value}
                 min={props.min}
                 max={props.max}
                 step={props.step}
@@ -162,7 +162,7 @@ export function EmailInput(props){
             <TextField 
                 type='email'
                 name={props.name}
-                defaultValue={props.value}
+                value={props.value}
                 onChange={props.onChange}
                 placeholder={props.placeholder}
                 required
@@ -197,8 +197,8 @@ export function FormBtn(props){
 }
 
 export function SelectInput(props){
-    const options = props.options.map( (option, index) => 
-        <Option key={index} value={option._id}>{option.name}</Option>    
+    const options = props.options.map( option => 
+        <Option key={option._id} value={option._id}>{option.name}</Option>    
     )
     
     return(
@@ -207,7 +207,7 @@ export function SelectInput(props){
             <Error>{props.errorMsg}</Error>
             <Select
                 name={props.name}
-                defaultValue={props.value ? props.value : '-- Select --'}
+                value={props.value ? props.value : '-- Select --'}
                 onChange={props.onChange}
             >
                 <option disabled>-- Select --</option>
@@ -224,7 +224,7 @@ export function TextAreaInput(props){
             <TextArea 
                 name={props.name}
                 placeholder={props.placeholder}
-                defaultValue={props.value}
+                value={props.value}
                 onChange={props.onChange}
             />
         </Wrapper>
