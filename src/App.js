@@ -45,16 +45,16 @@ function App() {
   ////////////////////////////// User ////////////////////////////////////
     const [loggedIn, setLoggedIn] = useState(false);
   
-    const [authenticate, setAuthenticate] = useState(false)
+    const [authenticated, setAuthenticated] = useState(false)
     const [user, setUser] = useState(null)
   
     useEffect(() => {
-      axios.get('http://localhost:5000/user', {
+      axios.get('http://localhost:5000/users', {
         credentials: 'include'
       })
         .then(data => data.json())
         .then(user => {
-          setAuthenticate(true)
+          setAuthenticated(true)
           setUser(user)
         })
         .catch(err => alert(err))
@@ -65,7 +65,7 @@ function App() {
         credentials: 'include'
       })
         .then(() => {
-          setAuthenticate(false);
+          setAuthenticated(false);
           setUser(null);
           alert('Logged out')
         })
@@ -82,17 +82,22 @@ function App() {
       >
         <BrowserRouter className='App'>
 
-          <button onClick={() => setLoggedIn(!loggedIn)}>
-            {loggedIn ? 'Log out' : 'Log in'}
+          <button onClick={() => setAuthenticated(!authenticated)}>
+            {authenticated ? 'Log out' : 'Log in'}
           </button>
           <Link to='/user'>User</Link>
           <br />
           <Link to='/item'>Item</Link>
           <br />
           <Link to='/category'>Category</Link>
+          <p>{authenticated}</p>
+          {console.log(user)}
 
 
-          <Navbar user={User} loggedIn={loggedIn}/>
+          <Navbar
+            authenticated={authenticated}
+            handleLogout={handleLogout}
+          />
           <Switch className='main-content'>
 
             {/* Route for home page */}
@@ -106,21 +111,17 @@ function App() {
             </Route>
             
             {/* Route for login */}
-            <Route exact path='/user/login'>
-              <LoginForm />
-            </Route>
-
-            {/* Route for editing user */}
-            <Route exact path='/user/edit'>
-              <UserForm
-                edit={loggedIn}
+            <Route exact path='/users/login'>
+              <LoginForm
+                setAuthenticated={setAuthenticated}
+                setUser={setUser}
               />
             </Route>
 
-            {/* Route for editing user */}
-            <Route exact path='/user/create'>
+            {/* Route for creating user */}
+            <Route exact path='/users/register'>
               <UserForm
-                edit={loggedIn}
+                setAuthenticated={setAuthenticated}
               />
             </Route>
 

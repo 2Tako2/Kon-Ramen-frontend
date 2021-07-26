@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { TextInput, PasswordInput, EmailInput, FormBtn } from '../components/formComponents.js';
 
@@ -23,12 +23,32 @@ const Form = styled.form`
 `;
 
 
-export default function UserForm(props) {
+export default function UserForm({setAuthenticated}) {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        fetch("http://localhost:5000/users/register", {
+          method: "POST",
+          credentials: 'include',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({username, password})
+        })
+        .then(result => setAuthenticated(true))
+        .catch(err => console.log(err))
+      }
+      
+
     return (
         <Main>
-            <Header>{props.edit ? 'Edit Account Detail' : 'Create Membership Account'}</Header>
-            <Form>
-                <TextInput
+            {/* <Header>{props.edit ? 'Edit Account Detail' : 'Create Account'}</Header> */}
+            <Header>Create Account</Header>
+            <Form onSubmit={handleSubmit}>
+                {/* <TextInput
                     label='First Name :'
                     name='firstName'
                     onChange={() => console.log('firstName')}
@@ -42,32 +62,32 @@ export default function UserForm(props) {
                     onChange={() => console.log('lastName')}
                     defaultValue=''
                     placeholder='Please insert your last name'
-                />
+                /> */}
 
-                <EmailInput
+                {/* <EmailInput */}
+                <TextInput
                     label='Email :'
-                    name='email'
-                    onChange={() => console.log('email')}
-                    placeholder='Please insert your email'
+                    name='username'
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder='E.g. example@email.com'
                 />
 
                 <PasswordInput
                     label='Password :'
                     name='password'
-                    onChange={() => console.log('password :')}
-                    placeholder='(minimum length of 6)'
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder='(minimum of 6 characters)'
                 />
 
-                <PasswordInput
+                {/* <PasswordInput
                     label='Confirm password :'
                     name='confirmPassword'
                     onChange={() => console.log('confirmPw')}
                     placeholder='Confirm Password'
-                />
+                /> */}
 
                 <FormBtn
                     value='Submit'
-
                 />
 
             </Form>

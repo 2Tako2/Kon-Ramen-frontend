@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { EmailInput, PasswordInput } from '../components/formComponents';
+import { TextInput, EmailInput, PasswordInput } from '../components/formComponents';
 const Main = styled.main`
     width: 100vw;
     max-width: 900px;
@@ -32,26 +32,56 @@ const P = styled.p`
     margin: 0;
 `;
 
-export default function LoginForm() {
+export default function LoginForm({setAuthenticated, setUser}) {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        fetch("http://localhost:5000/users/login", {
+          method: "POST",
+          credentials: 'include',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({username, password})
+        })
+        .then(result => {
+          if (result.status === 200) {
+            setAuthenticated(true)
+            return result.json()
+          }})
+          .then(user => {
+            setUser(user)
+            alert(user)         /////////////remove this later
+          }) 
+        .catch(err => console.log(err))
+    }
+
+
     return (
         <Main>
             <Header>Welcome back !</Header>
-            <Form>
-                <EmailInput
-                    name='email'
+            <Form onSubmit={handleSubmit}>
+                {/* <EmailInput */}
+                <TextInput
+                    name='username'
                     label='Email :'
                     placeholder='Please enter your email'
-                    onChange={() => console.log('email')}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
                 <PasswordInput
                     name='password'
                     label='Password :'
                     placeholder='Please enter your password'
+                    onChange={(e) => setPassword(e.target.value)}
+                    min={6}
                 />
             </Form>
             <Hr />
             <P>Don't have an account?</P>
-            <P><Link to='/user/create'>Join us here!</Link></P>
+            <P><Link to='/users/register'>Join us here!</Link></P>
         </Main>
     )
 }

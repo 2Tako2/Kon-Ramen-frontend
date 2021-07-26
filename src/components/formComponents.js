@@ -126,6 +126,7 @@ export function PasswordInput(props){
             <TextField 
                 type='password'
                 name={props.name}
+                min={props.min}
                 onChange={props.onChange}
                 placeholder={props.placeholder}
                 required
