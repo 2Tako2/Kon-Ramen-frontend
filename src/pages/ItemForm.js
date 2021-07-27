@@ -1,6 +1,5 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { MenuContext } from '../App.js';
 import { TextInput, TextAreaInput, NumberInput, CheckBoxInput, FormBtn, SelectInput, FileUpload } from '../components/formComponents.js';
 import axios from 'axios';
 
@@ -27,7 +26,6 @@ const Form = styled.form`
 
 
 export default function ItemForm(props) {
-    const menuContext = useContext(MenuContext);
 
     const [item, setItem] = useState({
         published: true,
@@ -35,7 +33,15 @@ export default function ItemForm(props) {
         unitPrice: 0,
         description: ''
     });
+
+    const [categories, setCategories] = useState([]);
     const [thumbnail, setThumbnail] = useState('');
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/categories/')
+        .then(res => setCategories(res.data))
+        .catch(err => console.log(err));
+    },[])
 
     const clearItem = () => {
         setItem({
@@ -98,7 +104,7 @@ export default function ItemForm(props) {
                     label='Category :'
                     name='category'
                     onChange={(e) => setItem({...item, category: e.target.value})}
-                    options={menuContext.menuState}
+                    options={categories}
                     value={item.category}
                 />
 

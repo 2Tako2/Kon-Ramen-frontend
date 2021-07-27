@@ -12,14 +12,15 @@ import ItemForm from './pages/ItemForm.js';
 import CategoryForm from './pages/CategoryForm.js';
 import UserForm from './pages/UserForm.js';
 import LoginForm from './pages/LoginForm.js';
+import EditMenu from './pages/EditMenu.js';
 
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
-import { menuReducer, MENU_ACTIONS } from './useReducer/menuReducer';
+// import { menuReducer, MENU_ACTIONS } from './useReducer/menuReducer';
 
 // Exporting orderContext
 export const OrderContext = React.createContext();
-export const MenuContext = React.createContext();
+// export const MenuContext = React.createContext();
 
 function App() {
 
@@ -27,17 +28,18 @@ function App() {
   const [order, orderDispatch] = useReducer(orderReducer, initialOrder);
   
   ////////////////////////////// Order ////////////////////////////////////
-  const [menu, menuDispatch] = useReducer(menuReducer, []);
+  // const [menu, menuDispatch] = useReducer(menuReducer, []);
   
-  useEffect(() => {
-    axios.get('http://localhost:5000/categories/')
-    .then(res => 
-      menuDispatch({
-        type: MENU_ACTIONS.LOAD_MENU,
-        value: res.data
-      })
-      )
-    },[])
+  // useEffect(() => {
+  //   axios.get('http://localhost:5000/categories/')
+  //   .then(res => 
+  //     menuDispatch({
+  //       type: MENU_ACTIONS.LOAD_MENU,
+  //       value: res.data
+  //     })
+  //     )
+  //   },[])
+
 
   ///////////////////////// End of Order //////////////////////////////////
     
@@ -69,9 +71,9 @@ function App() {
   /////////////////////// End of User ////////////////////////////////////
   
   return (
-    <MenuContext.Provider
-      value={{ menuState: menu, menuDispatch: menuDispatch}}
-    >
+    // <MenuContext.Provider
+    //   value={{ menuState: menu, menuDispatch: menuDispatch}}
+    // >
       <OrderContext.Provider
         value={{ orderState: order, orderDispatch: orderDispatch}}
       >
@@ -124,12 +126,16 @@ function App() {
               <CategoryForm />
             </Route>
 
+            <Route exact path='/admin/menu'>
+              <EditMenu />
+            </Route>
+
             {/* Route for redirection */}
             <Route><Redirect to='/' /></Route>
           </Switch>
         </BrowserRouter>
       </OrderContext.Provider>
-    </MenuContext.Provider>
+    // </MenuContext.Provider>
   );
 }
 
