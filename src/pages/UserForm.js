@@ -38,23 +38,6 @@ export default function UserForm({setAuthenticated, setUser}) {
                 setUser(res);
             })
             .catch(err => alert(err));
-
-
-        // fetch("http://localhost:5000/users/register", {
-        //   method: "POST",
-        //   credentials: 'include',
-        //   headers: {
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({email, password})
-        // })
-        // .then(response => response.json())
-        // .then(result => {
-        //     window.location = '/';
-        //     setAuthenticated(true);
-        //     setUser(result);
-        // })
-        // .catch(err => console.log("err"));
       }
       
 

@@ -8,7 +8,7 @@ import {BiLogOut, BiLogIn} from 'react-icons/bi';
 // import {MdAccountCircle} from 'react-icons/md';
 import {HiHome} from 'react-icons/hi';
 
-export default function Navbar ({authenticated, handleLogout}) {
+export default function Navbar ({authenticated, handleLogout, user}) {
     const [navbar, setNavbar] = useState(true)
 
     window.addEventListener('resize', () => (window.innerWidth <= 500) ? setNavbar(false) : setNavbar(true))
@@ -62,6 +62,7 @@ export default function Navbar ({authenticated, handleLogout}) {
                             }
                         </li>
                     </ul>
+                    {user && <p>Hi, {user.email}</p>}
                 </div>
             </div>
         </nav>

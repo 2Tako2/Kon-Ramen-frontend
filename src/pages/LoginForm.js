@@ -54,24 +54,6 @@ export default function LoginForm({setAuthenticated, setUser}) {
                 }
             })
             .catch(err => console.log(err))
-
-        // fetch("http://localhost:5000/users/login", {
-        //   method: "POST",
-        //   credentials: 'include',
-        //   headers: {
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({email, password})
-        // })
-        // .then(result => {
-        //   if (result.status === 200) {
-        //     setAuthenticated(true)
-        //     return result.json()
-        //   }})
-        //   .then(user => {
-        //     setUser(user)
-        //   }) 
-        // .catch(err => console.log(err))
     }
 
 

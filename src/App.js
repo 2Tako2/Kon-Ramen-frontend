@@ -76,22 +76,15 @@ function App() {
         value={{ orderState: order, orderDispatch: orderDispatch}}
       >
         <BrowserRouter className='App'>
-
-          <button onClick={() => setAuthenticated(!authenticated)}>
-            {authenticated ? 'Log out' : 'Log in'}
-          </button>
-          <br />
           <Link to='/item'>Item</Link>
           <br />
           <Link to='/category'>Category</Link>
-          {console.log(`authenticated state is ${authenticated}`)}
-          {console.log(user)}
-          {user && <p>{user.email}</p>}
 
 
           <Navbar
             authenticated={authenticated}
             handleLogout={handleLogout}
+            user={user}
           />
           <Switch className='main-content'>
 
