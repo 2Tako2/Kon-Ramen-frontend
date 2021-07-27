@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { TextInput, EmailInput, PasswordInput, FormBtn } from '../components/formComponents';
+import { EmailInput, PasswordInput, FormBtn } from '../components/formComponents';
 const Main = styled.main`
     width: 100vw;
     max-width: 900px;
@@ -34,29 +35,43 @@ const P = styled.p`
 
 export default function LoginForm({setAuthenticated, setUser}) {
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = e => {
         e.preventDefault()
-        fetch("http://localhost:5000/users/login", {
-          method: "POST",
-          credentials: 'include',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({username, password})
-        })
-        .then(result => {
-          if (result.status === 200) {
-            setAuthenticated(true)
-            return result.json()
-          }})
-          .then(user => {
-            setUser(user)
-            alert(user)         /////////////remove this later
-          }) 
-        .catch(err => console.log(err))
+
+        axios.post(
+            'http://localhost:5000/users/login',
+            {email, password},
+            {withCredentials: true}
+        )
+            .then(res => {
+                if (res.status === 200) {
+                    window.location = '/'
+                    setAuthenticated(true)
+                    setUser(res.data)
+                }
+            })
+            .catch(err => console.log(err))
+
+        // fetch("http://localhost:5000/users/login", {
+        //   method: "POST",
+        //   credentials: 'include',
+        //   headers: {
+        //     "Content-Type": "application/json"
+        //   },
+        //   body: JSON.stringify({email, password})
+        // })
+        // .then(result => {
+        //   if (result.status === 200) {
+        //     setAuthenticated(true)
+        //     return result.json()
+        //   }})
+        //   .then(user => {
+        //     setUser(user)
+        //   }) 
+        // .catch(err => console.log(err))
     }
 
 
@@ -64,12 +79,11 @@ export default function LoginForm({setAuthenticated, setUser}) {
         <Main>
             <Header>Welcome back !</Header>
             <Form onSubmit={handleSubmit}>
-                {/* <EmailInput */}
-                <TextInput
-                    name='username'
+                <EmailInput
+                    name='email'
                     label='Email :'
                     placeholder='Please enter your email'
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <PasswordInput
                     name='password'

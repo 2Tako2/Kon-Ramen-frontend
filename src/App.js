@@ -16,7 +16,6 @@ import LoginForm from './pages/LoginForm.js';
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
 import { menuReducer, MENU_ACTIONS } from './useReducer/menuReducer';
-// import { User } from './useReducer/userReducer.js';
 
 // Exporting orderContext
 export const OrderContext = React.createContext();
@@ -44,30 +43,26 @@ function App() {
     
 
   ////////////////////////////// User ////////////////////////////////////
-    // const [loggedIn, setLoggedIn] = useState(false);
   
     const [authenticated, setAuthenticated] = useState(false)
     const [user, setUser] = useState(null)
   
     useEffect(() => {
-      axios.get('http://localhost:5000/users/me', {
-        withCredentials: true
-      })
+      axios.get('http://localhost:5000/users/cookie', {withCredentials: true})
         .then(response => {
           setAuthenticated(true)
           setUser(response.data)
         })
-        .catch(err => alert(err))
+        .catch(err => console.log(err))
     }, [])
 
     const handleLogout = () => {
-      axios.get('http://localhost:5000/logout', {
-        withCredentials: true
-      })
-        .then(() => {
+      axios.get('http://localhost:5000/users/logout', {withCredentials: true})
+        .then((res) => {
+          window.location = '/';
           setAuthenticated(false);
           setUser(null);
-          alert('Logged out')
+          alert('Logged out');
         })
         .catch(err => alert(err))
     }
@@ -91,6 +86,7 @@ function App() {
           <Link to='/category'>Category</Link>
           {console.log(`authenticated state is ${authenticated}`)}
           {console.log(user)}
+          {user && <p>{user.email}</p>}
 
 
           <Navbar

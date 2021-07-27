@@ -13,7 +13,6 @@ const ItemCardContainer = styled.div`
     height: 300px;
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     flex-direction: column;
     margin: 10px;
     padding: 10px;
@@ -48,33 +47,8 @@ export default function ItemCard(props) {
     const orderContext = useContext(OrderContext);
     const [itemModal, setItemModal] = useState(false);
 
-    // const addAction = () =>{
-    //     let index = orderContext.orderState.orderItems.findIndex( item =>
-    //         item.itemId === props.itemId    
-    //     )
-    //     if (index === -1) {
-    //         return orderContext.orderDispatch({
-    //             type: ACTIONS.ADD_ITEM_TO_ORDER,
-    //             value: {
-    //                 name: props.name,
-    //                 unitPrice: props.unitPrice,
-    //                 qty: 1
-    //             }
-    //         })
-    //     } else {
-    //         return orderContext.orderDispatch({
-    //             type: ACTIONS.ADD_ITEM_BY_N,
-    //             value: {
-    //                 index: index,
-    //                 qty: 1
-    //             }
-    //         })
-    //     }
-    // }
-
     return (
         <ItemCardContainer>
-            {console.log(props)}
             <ItemModal
                 isOpen={itemModal}
                 closeModal={() => setItemModal(false)}
