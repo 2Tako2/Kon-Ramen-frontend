@@ -91,10 +91,20 @@ const Table = styled.ul`
     }
 `;
 
-
-const Thumbnail = styled.img`
+const BtnContainer = styled.div`
     margin: auto;
-    height: 100px;
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+`;
+
+const CreateBtn = styled.button`
+    background: #000;
+    height: 40px;
+    border-radius: 20px;
+    color: #fff;
+    padding: 0 30px;
+    
 `;
 
 export default function EditMenu() {
@@ -109,9 +119,21 @@ export default function EditMenu() {
 
     return (
         <Main>
-            <H1>Admin menu edit mode</H1>
+            <H1>Edit Menu</H1>
+            <BtnContainer>
+                <CreateBtn
+                    onClick={() => console.log('create category')}
+                >
+                    Create New Category +
+                </CreateBtn>
+                <CreateBtn
+                    onClick={() => console.log('create item')}
+                >
+                    Create New Item +
+                </CreateBtn>
+            </BtnContainer>
             {menu.map(category =>                    
-                <Table>
+                <Table key={category._id}>
                     <li className='category-row'>
                         {category.name}
                         <span className='category-status'>
@@ -135,7 +157,7 @@ export default function EditMenu() {
                     (<li className='empty-row'>-- No item in this category --</li>)
                     :
                     (category.items.map( item => 
-                        <li className='item-row'>
+                        <li className='item-row' key={item._id}>
                             <div className='col-1'>
                                 <button
                                     className='item-edit-btn'
