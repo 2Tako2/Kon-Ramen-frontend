@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { TextInput, EmailInput, PasswordInput } from '../components/formComponents';
+import { TextInput, EmailInput, PasswordInput, FormBtn } from '../components/formComponents';
 const Main = styled.main`
     width: 100vw;
     max-width: 900px;
@@ -78,6 +78,8 @@ export default function LoginForm({setAuthenticated, setUser}) {
                     onChange={(e) => setPassword(e.target.value)}
                     min={6}
                 />
+                <br />
+                <FormBtn value='Submit' />
             </Form>
             <Hr />
             <P>Don't have an account?</P>

@@ -31,19 +31,19 @@ export default function UserForm({setAuthenticated}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.get('http://localhost:5000/testing')
-            .then(res => alert(res.data))
-            .catch(err => alert(err))
-    //     fetch("http://localhost:5000/users/register", {
-    //       method: "POST",
-    //       credentials: 'include',
-    //       headers: {
-    //         "Content-Type": "application/json"
-    //       },
-    //       body: JSON.stringify({username, password})
-    //     })
-    //     .then(result => setAuthenticated(true))
-    //     .catch(err => console.log("err"))
+        // axios.get('http://localhost:5000/testing')
+        //     .then(res => alert(res.data))
+        //     .catch(err => alert(err))
+        fetch("http://localhost:5000/users/register", {
+          method: "POST",
+          credentials: 'include',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({username, password})
+        })
+        .then(result => setAuthenticated(true))
+        .catch(err => console.log("err"))
       }
       
 
@@ -90,9 +90,7 @@ export default function UserForm({setAuthenticated}) {
                     placeholder='Confirm Password'
                 /> */}
 
-                <FormBtn
-                    value='Submit'
-                />
+                <FormBtn value='Submit' />
 
             </Form>
         </Main>

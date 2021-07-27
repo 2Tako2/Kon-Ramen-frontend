@@ -16,7 +16,7 @@ import LoginForm from './pages/LoginForm.js';
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
 import { menuReducer, MENU_ACTIONS } from './useReducer/menuReducer';
-import { User } from './useReducer/userReducer.js';
+// import { User } from './useReducer/userReducer.js';
 
 // Exporting orderContext
 export const OrderContext = React.createContext();
@@ -43,7 +43,7 @@ function App() {
     
 
   ////////////////////////////// User ////////////////////////////////////
-    const [loggedIn, setLoggedIn] = useState(false);
+    // const [loggedIn, setLoggedIn] = useState(false);
   
     const [authenticated, setAuthenticated] = useState(false)
     const [user, setUser] = useState(null)
@@ -85,12 +85,11 @@ function App() {
           <button onClick={() => setAuthenticated(!authenticated)}>
             {authenticated ? 'Log out' : 'Log in'}
           </button>
-          <Link to='/user'>User</Link>
           <br />
           <Link to='/item'>Item</Link>
           <br />
           <Link to='/category'>Category</Link>
-          <p>{authenticated}</p>
+          {console.log(`authenticated state is ${authenticated}`)}
           {console.log(user)}
 
 
