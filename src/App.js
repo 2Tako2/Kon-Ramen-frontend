@@ -39,6 +39,7 @@ function App() {
       })
       )
     },[])
+
   ///////////////////////// End of Order //////////////////////////////////
     
 
@@ -49,20 +50,19 @@ function App() {
     const [user, setUser] = useState(null)
   
     useEffect(() => {
-      axios.get('http://localhost:5000/users', {
-        credentials: 'include'
+      axios.get('http://localhost:5000/users/me', {
+        withCredentials: true
       })
-        .then(data => data.json())
-        .then(user => {
+        .then(response => {
           setAuthenticated(true)
-          setUser(user)
+          setUser(response.data)
         })
         .catch(err => alert(err))
     }, [])
 
     const handleLogout = () => {
       axios.get('http://localhost:5000/logout', {
-        credentials: 'include'
+        withCredentials: true
       })
         .then(() => {
           setAuthenticated(false);
@@ -121,6 +121,7 @@ function App() {
             <Route exact path='/users/register'>
               <UserForm
                 setAuthenticated={setAuthenticated}
+                setUser={setUser}
               />
             </Route>
 

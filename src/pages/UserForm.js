@@ -24,9 +24,9 @@ const Form = styled.form`
 `;
 
 
-export default function UserForm({setAuthenticated}) {
+export default function UserForm({setAuthenticated, setUser}) {
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
@@ -40,9 +40,13 @@ export default function UserForm({setAuthenticated}) {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({username, password})
+          body: JSON.stringify({email, password})
         })
-        .then(result => setAuthenticated(true))
+        .then(response => response.json())
+        .then(result => {
+            setAuthenticated(true)
+            setUser(result)
+        })
         .catch(err => console.log("err"))
       }
       
@@ -68,11 +72,10 @@ export default function UserForm({setAuthenticated}) {
                     placeholder='Please insert your last name'
                 /> */}
 
-                {/* <EmailInput */}
-                <TextInput
+                <EmailInput
                     label='Email :'
-                    name='username'
-                    onChange={(e) => setUsername(e.target.value)}
+                    name='email'
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder='E.g. example@email.com'
                 />
 
