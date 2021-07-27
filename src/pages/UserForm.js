@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
-import { TextInput, PasswordInput, EmailInput, FormBtn } from '../components/formComponents.js';
+import axios from 'axios';
+import { PasswordInput, EmailInput, FormBtn } from '../components/formComponents.js';
 
 const Main = styled.main`
     width: 100vw;
@@ -23,53 +24,44 @@ const Form = styled.form`
 `;
 
 
-export default function UserForm(props) {
+export default function UserForm({setAuthenticated, setUser}) {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios.post('http://localhost:5000/users/register',{email, password}, {withCredentials: true})
+            .then(res => {
+                window.location = '/';
+                setAuthenticated(true);
+                setUser(res);
+            })
+            .catch(err => alert(err));
+      }
+      
+
     return (
         <Main>
-            <Header>{props.edit ? 'Edit Account Detail' : 'Create Membership Account'}</Header>
-            <Form>
-                <TextInput
-                    label='First Name :'
-                    name='firstName'
-                    onChange={() => console.log('firstName')}
-                    defaultValue=''
-                    placeholder='Please insert your first name'
-                />
-
-                <TextInput
-                    label='Last Name :'
-                    name='lastName'
-                    onChange={() => console.log('lastName')}
-                    defaultValue=''
-                    placeholder='Please insert your last name'
-                />
+            {/* <Header>{props.edit ? 'Edit Account Detail' : 'Create Account'}</Header> */}
+            <Header>Create Account</Header>
+            <Form onSubmit={handleSubmit}>
 
                 <EmailInput
                     label='Email :'
                     name='email'
-                    onChange={() => console.log('email')}
-                    placeholder='Please insert your email'
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder='E.g. example@email.com'
                 />
 
                 <PasswordInput
                     label='Password :'
                     name='password'
-                    onChange={() => console.log('password :')}
-                    placeholder='(minimum length of 6)'
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder='(minimum of 6 characters)'
                 />
 
-                <PasswordInput
-                    label='Confirm password :'
-                    name='confirmPassword'
-                    onChange={() => console.log('confirmPw')}
-                    placeholder='Confirm Password'
-                />
-
-                <FormBtn
-                    value='Submit'
-
-                />
-
+                <FormBtn value='Submit' />
             </Form>
         </Main>
     )

@@ -16,7 +16,6 @@ import LoginForm from './pages/LoginForm.js';
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
 import { menuReducer, MENU_ACTIONS } from './useReducer/menuReducer';
-import { User } from './useReducer/userReducer.js';
 
 // Exporting orderContext
 export const OrderContext = React.createContext();
@@ -26,20 +25,48 @@ function App() {
 
   // Define reducers
   const [order, orderDispatch] = useReducer(orderReducer, initialOrder);
-  const [menu, menuDispatch] = useReducer(menuReducer, []);
   
-  const [loggedIn, setLoggedIn] = useState(false);
+  ////////////////////////////// Order ////////////////////////////////////
+  const [menu, menuDispatch] = useReducer(menuReducer, []);
   
   useEffect(() => {
     axios.get('http://localhost:5000/categories/')
-      .then(res => 
-        menuDispatch({
-          type: MENU_ACTIONS.LOAD_MENU,
-          value: res.data
-        })
+    .then(res => 
+      menuDispatch({
+        type: MENU_ACTIONS.LOAD_MENU,
+        value: res.data
+      })
       )
-  },[])
+    },[])
 
+  ///////////////////////// End of Order //////////////////////////////////
+    
+
+  ////////////////////////////// User ////////////////////////////////////
+  
+    const [authenticated, setAuthenticated] = useState(false)
+    const [user, setUser] = useState(null)
+  
+    useEffect(() => {
+      axios.get('http://localhost:5000/users/cookie', {withCredentials: true})
+        .then(response => {
+          setAuthenticated(true)
+          setUser(response.data)
+        })
+        .catch(err => console.log(err))
+    }, [])
+
+    const handleLogout = () => {
+      axios.get('http://localhost:5000/users/logout', {withCredentials: true})
+        .then((res) => {
+          window.location = '/';
+          setAuthenticated(false);
+          setUser(null);
+          alert('Logged out');
+        })
+        .catch(err => alert(err))
+    }
+  /////////////////////// End of User ////////////////////////////////////
   
   return (
     <MenuContext.Provider
@@ -49,18 +76,16 @@ function App() {
         value={{ orderState: order, orderDispatch: orderDispatch}}
       >
         <BrowserRouter className='App'>
-
-          <button onClick={() => setLoggedIn(!loggedIn)}>
-            {loggedIn ? 'Log out' : 'Log in'}
-          </button>
-          <Link to='/user'>User</Link>
-          <br />
           <Link to='/item'>Item</Link>
           <br />
           <Link to='/category'>Category</Link>
 
 
-          <Navbar user={User} loggedIn={loggedIn}/>
+          <Navbar
+            authenticated={authenticated}
+            handleLogout={handleLogout}
+            user={user}
+          />
           <Switch className='main-content'>
 
             {/* Route for home page */}
@@ -74,21 +99,18 @@ function App() {
             </Route>
             
             {/* Route for login */}
-            <Route exact path='/user/login'>
-              <LoginForm />
-            </Route>
-
-            {/* Route for editing user */}
-            <Route exact path='/user/edit'>
-              <UserForm
-                edit={loggedIn}
+            <Route exact path='/users/login'>
+              <LoginForm
+                setAuthenticated={setAuthenticated}
+                setUser={setUser}
               />
             </Route>
 
-            {/* Route for editing user */}
-            <Route exact path='/user/create'>
+            {/* Route for creating user */}
+            <Route exact path='/users/register'>
               <UserForm
-                edit={loggedIn}
+                setAuthenticated={setAuthenticated}
+                setUser={setUser}
               />
             </Route>
 

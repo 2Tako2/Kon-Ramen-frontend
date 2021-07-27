@@ -58,8 +58,8 @@ export default function OrderListModal(props) {
                         className='confirm-btn'
                         onClick={() =>
                             axios.post('http://localhost:5000/orders/', orderContext.orderState)
-                                .then(res => console.log(res))
-                                .catch(err => console.log(err))
+                                .then(res => alert(res))
+                                .catch(err => alert(err))
                         }
                     >MAKE PAYMENT</button>
                 </div>

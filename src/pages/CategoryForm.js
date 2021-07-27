@@ -34,13 +34,15 @@ export default function ItemForm(props) {
     
     const postCategory = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/categories/', category)
-            .then( res => {
-                clearCategory();
-                window.location = '/';
-                alert(`Successfully created ${category.name} category`);
-            })
-            .catch( err => alert(err))
+        axios.post('http://localhost:5000/categories/', category, {
+            withCredential: true,
+        })
+        .then( res => {
+            clearCategory();
+            window.location = '/';
+            alert(`Successfully created ${category.name} category`);
+        })
+        .catch( err => alert(err))
     }
 
 

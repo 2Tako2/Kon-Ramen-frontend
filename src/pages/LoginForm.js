@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { EmailInput, PasswordInput } from '../components/formComponents';
+import { EmailInput, PasswordInput, FormBtn } from '../components/formComponents';
 const Main = styled.main`
     width: 100vw;
     max-width: 900px;
@@ -32,26 +33,53 @@ const P = styled.p`
     margin: 0;
 `;
 
-export default function LoginForm() {
+export default function LoginForm({setAuthenticated, setUser}) {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        axios.post(
+            'http://localhost:5000/users/login',
+            {email, password},
+            {withCredentials: true}
+        )
+            .then(res => {
+                if (res.status === 200) {
+                    window.location = '/'
+                    setAuthenticated(true)
+                    setUser(res.data)
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
+
     return (
         <Main>
             <Header>Welcome back !</Header>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <EmailInput
                     name='email'
                     label='Email :'
                     placeholder='Please enter your email'
-                    onChange={() => console.log('email')}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <PasswordInput
                     name='password'
                     label='Password :'
                     placeholder='Please enter your password'
+                    onChange={(e) => setPassword(e.target.value)}
+                    min={6}
                 />
+                <br />
+                <FormBtn value='Submit' />
             </Form>
             <Hr />
             <P>Don't have an account?</P>
-            <P><Link to='/user/create'>Join us here!</Link></P>
+            <P><Link to='/users/register'>Join us here!</Link></P>
         </Main>
     )
 }

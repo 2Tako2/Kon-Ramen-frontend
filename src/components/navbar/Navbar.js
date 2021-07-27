@@ -5,10 +5,10 @@ import logo from '../../imgs/logo.png';
 import {GiHamburgerMenu, GiNoodles} from 'react-icons/gi';
 import {IoCloseSharp} from 'react-icons/io5';
 import {BiLogOut, BiLogIn} from 'react-icons/bi';
-import {MdAccountCircle} from 'react-icons/md';
+// import {MdAccountCircle} from 'react-icons/md';
 import {HiHome} from 'react-icons/hi';
 
-export default function Navbar (props) {
+export default function Navbar ({authenticated, handleLogout, user}) {
     const [navbar, setNavbar] = useState(true)
 
     window.addEventListener('resize', () => (window.innerWidth <= 500) ? setNavbar(false) : setNavbar(true))
@@ -38,27 +38,31 @@ export default function Navbar (props) {
                                 <p className='nav-link-name'>Order Online Now!</p>
                             </Link>
                         </li>
-                        {props.loggedIn &&
+                        {/* {authenticated &&
                             <li className='nav-link'>
                                 <Link to='/user/edit'>
                                     <MdAccountCircle className='nav-icon' />
                                     <p className='nav-link-name'>Edit Account</p>
                                 </Link>
                             </li>
-                        }
+                        } */}
                         <li className='nav-link'>
-                            {props.loggedIn ? 
-                                <Link to='/'>
+                            {authenticated ? 
+                                <button
+                                    className='logout-btn'
+                                    onClick={handleLogout}
+                                >
                                     <BiLogOut className='nav-icon' />
                                     <p className='nav-link-name'>Log Out</p>
-                                </Link> :
-                                <Link to='/user/login'>
+                                </button> :
+                                <Link to='/users/login'>
                                     <BiLogIn className='nav-icon' />
                                     <p className='nav-link-name'>Log In</p>
                                 </Link>
                             }
                         </li>
                     </ul>
+                    {user && <p>Hi, {user.email}</p>}
                 </div>
             </div>
         </nav>
