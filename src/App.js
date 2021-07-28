@@ -6,42 +6,21 @@ import axios from 'axios';
 // Importing components
 import Navbar from './components/navbar/Navbar.js';
 import HomePage from './pages/HomePage.js'
-// import ItemMenu from './components/ItemMenu.js';
 import OrderingPage from './pages/OrderingPage.js';
-import ItemForm from './pages/ItemForm.js';
-import CategoryForm from './pages/CategoryForm.js';
 import UserForm from './pages/UserForm.js';
 import LoginForm from './pages/LoginForm.js';
 import EditMenu from './pages/EditMenu.js';
 
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
-// import { menuReducer, MENU_ACTIONS } from './useReducer/menuReducer';
 
 // Exporting orderContext
 export const OrderContext = React.createContext();
-// export const MenuContext = React.createContext();
 
 function App() {
 
-  // Define reducers
+  // Define order reducer
   const [order, orderDispatch] = useReducer(orderReducer, initialOrder);
-  
-  ////////////////////////////// Order ////////////////////////////////////
-  // const [menu, menuDispatch] = useReducer(menuReducer, []);
-  
-  // useEffect(() => {
-  //   axios.get('http://localhost:5000/categories/')
-  //   .then(res => 
-  //     menuDispatch({
-  //       type: MENU_ACTIONS.LOAD_MENU,
-  //       value: res.data
-  //     })
-  //     )
-  //   },[])
-
-
-  ///////////////////////// End of Order //////////////////////////////////
     
 
   ////////////////////////////// User ////////////////////////////////////
@@ -71,9 +50,6 @@ function App() {
   /////////////////////// End of User ////////////////////////////////////
   
   return (
-    // <MenuContext.Provider
-    //   value={{ menuState: menu, menuDispatch: menuDispatch}}
-    // >
       <OrderContext.Provider
         value={{ orderState: order, orderDispatch: orderDispatch}}
       >
@@ -117,16 +93,6 @@ function App() {
               />
             </Route>
 
-            {/* Route for editing item */}
-            <Route path='/item'>
-              <ItemForm />
-            </Route>
-            
-            {/* Route for editing or creating category */}
-            <Route path='/category'>
-              <CategoryForm />
-            </Route>
-
             <Route exact path='/admin/menu'>
               <EditMenu />
             </Route>
@@ -136,7 +102,6 @@ function App() {
           </Switch>
         </BrowserRouter>
       </OrderContext.Provider>
-    // </MenuContext.Provider>
   );
 }
 

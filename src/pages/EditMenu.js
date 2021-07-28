@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
+import CategoryFormModal from '../components/forms/CategoryFormModal.js';
+import ItemFormModal from '../components/forms/ItemFormModal.js';
 import {BiEdit} from 'react-icons/bi';
 
 const Main = styled.div`
@@ -109,9 +111,12 @@ const CreateBtn = styled.button`
 
 export default function EditMenu() {
     const [menu, setMenu] = useState([])
+    const [categoryModal, setCategoryModal] = useState(false)
+    const [itemModal, setItemModal] = useState(false)
+    const [editingMode, setEditingMode] = useState(false)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories/')
+        axios.get('http://localhost:5000/categories/all')
             .then(res => setMenu(res.data))
             .catch(err => console.log(err));
     })
@@ -119,15 +124,28 @@ export default function EditMenu() {
 
     return (
         <Main>
+
+            <CategoryFormModal 
+                isOpen={categoryModal}
+                closeModal={() => setCategoryModal(false)}
+                editingMode={editingMode}
+            />
+            <ItemFormModal
+                isOpen={itemModal}
+                closeModal={() => setItemModal(false)}
+                editingMode={editingMode}
+                categories={menu}
+            />
+
             <H1>Edit Menu</H1>
             <BtnContainer>
                 <CreateBtn
-                    onClick={() => console.log('create category')}
+                    onClick={() => setCategoryModal(true)}
                 >
                     Create New Category +
                 </CreateBtn>
                 <CreateBtn
-                    onClick={() => console.log('create item')}
+                    onClick={() => setItemModal(true)}
                 >
                     Create New Item +
                 </CreateBtn>

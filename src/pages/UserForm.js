@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { PasswordInput, EmailInput, FormBtn } from '../components/formComponents.js';
+import { PasswordInput, EmailInput, FormBtn } from '../components/forms/formComponents.js';
 
 const Main = styled.main`
     width: 100vw;

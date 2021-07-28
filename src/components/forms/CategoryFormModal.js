@@ -1,30 +1,11 @@
 import React, {useState} from 'react';
-import styled from 'styled-components';
+import './FormModal.css';
+import Modal from 'react-modal';
 import axios from 'axios';
 
-import { CheckBoxInput, TextInput, FormBtn } from '../components/formComponents.js';
+import { CheckBoxInput, TextInput, FormBtn } from './formComponents.js';
 
-const Main = styled.main`
-    width: 100vw;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-`;
-
-const Header = styled.h2`
-    text-align: center;
-`
-
-const Form = styled.form`
-    width: 100%;
-    max-width: 250px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-`;
-
-export default function ItemForm(props) {
+export default function CategoryFormModal(props) {
 
     const [category, setCategory] = useState({ "name": "", "published": false })
 
@@ -38,8 +19,8 @@ export default function ItemForm(props) {
             withCredential: true,
         })
         .then( res => {
+            props.closeModal()
             clearCategory();
-            window.location = '/';
             alert(`Successfully created ${category.name} category`);
         })
         .catch( err => alert(err))
@@ -47,9 +28,15 @@ export default function ItemForm(props) {
 
 
     return (
-        <Main>
-            <Header>{props.editing ? 'Edit Category' : 'Crete Category'}</Header>
-            <Form onSubmit={postCategory}>
+        <Modal
+            isOpen={props.isOpen}
+            onRequestClose={props.closeModal}
+            className='form-modal'
+            ariaHideApp={false}
+        >   
+            <button className='close-btn' onClick={props.closeModal}>x</button>
+            <header className='modal-header'>{props.editingMode ? 'Edit Category' : 'Create Category'}</header>
+            <form onSubmit={postCategory}>
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'
@@ -66,7 +53,7 @@ export default function ItemForm(props) {
                 />
                 <br />
                 <FormBtn value='Submit'/>
-            </Form>
-        </Main>
+            </form>
+        </Modal>
     )
 }

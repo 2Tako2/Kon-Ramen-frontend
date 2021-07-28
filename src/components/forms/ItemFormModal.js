@@ -1,31 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import styled from 'styled-components';
-import { TextInput, TextAreaInput, NumberInput, CheckBoxInput, FormBtn, SelectInput, FileUpload } from '../components/formComponents.js';
+import React, {useState} from 'react';
+import './FormModal.css';
+import Modal from 'react-modal';
+import { TextInput, TextAreaInput, NumberInput, CheckBoxInput, FormBtn, SelectInput, FileUpload } from './formComponents.js';
 import axios from 'axios';
 
-const Main = styled.main`
-    width: 100vw;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-`;
-
-const Header = styled.h2`
-    text-align: center;
-`
-
-const Form = styled.form`
-    width: 100%;
-    max-width: 250px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-`;
-
-
-
-export default function ItemForm(props) {
+export default function ItemFormModal(props) {
 
     const [item, setItem] = useState({
         published: true,
@@ -33,15 +12,7 @@ export default function ItemForm(props) {
         unitPrice: 0,
         description: ''
     });
-
-    const [categories, setCategories] = useState([]);
     const [thumbnail, setThumbnail] = useState('');
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/categories/')
-        .then(res => setCategories(res.data))
-        .catch(err => console.log(err));
-    },[])
 
     const clearItem = () => {
         setItem({
@@ -64,17 +35,23 @@ export default function ItemForm(props) {
 
         axios.post('http://localhost:5000/items', itemFormData)
             .then( res => {
+                props.closeModal();
                 clearItem();
-                window.location = '/';
                 alert(`Successfully created ${item.name} item`);
             })
             .catch(err => alert(err));
     }
 
     return (
-        <Main>
-            <Header>{props.editing ? 'Edit Item' : 'Create Item'}</Header>
-            <Form onSubmit={createItem}>
+        <Modal
+            isOpen={props.isOpen}
+            onRequestClose={props.closeModal}
+            className='form-modal'
+            ariaHideApp={false}
+        >
+            <button className='close-btn' onClick={props.closeModal}>x</button>
+            <header className='modal-header'>{props.editing ? 'Edit Item' : 'Create Item'}</header>
+            <form onSubmit={createItem}>
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'
@@ -104,7 +81,7 @@ export default function ItemForm(props) {
                     label='Category :'
                     name='category'
                     onChange={(e) => setItem({...item, category: e.target.value})}
-                    options={categories}
+                    options={props.categories}
                     value={item.category}
                 />
 
@@ -126,7 +103,7 @@ export default function ItemForm(props) {
                 
                 <FormBtn value='Submit'/>
 
-            </Form>
-        </Main>
+            </form>
+        </Modal>
     )
 }
