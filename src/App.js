@@ -13,15 +13,17 @@ import EditMenu from './pages/EditMenu.js';
 
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
+import { initialCategory, categoryReducer } from './useReducer/categoryReducer';
 
 // Exporting orderContext
 export const OrderContext = React.createContext();
+export const CategoryContext = React.createContext();
 
 function App() {
 
   // Define order reducer
   const [order, orderDispatch] = useReducer(orderReducer, initialOrder);
-    
+  const [category, categoryDispatch] = useReducer(categoryReducer, initialCategory);
 
   ////////////////////////////// User ////////////////////////////////////
   
@@ -50,56 +52,57 @@ function App() {
   /////////////////////// End of User ////////////////////////////////////
   
   return (
-      <OrderContext.Provider
-        value={{ orderState: order, orderDispatch: orderDispatch}}
-      >
-        <BrowserRouter className='App'>
-          {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
-          <p>email: admin@admin.com pw:000000 *6x0s*</p>
-          {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
+    <BrowserRouter className='App'>
+      {console.log(category)}
+        <Navbar
+          authenticated={authenticated}
+          handleLogout={handleLogout}
+          user={user}
+        />
+        <Switch className='main-content'>
+
+          {/* Route for home page */}
+          <Route exact path='/'>
+            <HomePage />
+          </Route>
           
-          <Navbar
-            authenticated={authenticated}
-            handleLogout={handleLogout}
-            user={user}
-          />
-          <Switch className='main-content'>
-
-            {/* Route for home page */}
-            <Route exact path='/'>
-              <HomePage />
-            </Route>
-            
-            {/* Route for ordering */}
-            <Route exact path='/order'>
+          {/* Route for ordering */}
+          <Route exact path='/order'>
+            <OrderContext.Provider
+              value={{ orderState: order, orderDispatch: orderDispatch }}
+            >
               <OrderingPage />
-            </Route>
-            
-            {/* Route for login */}
-            <Route exact path='/users/login'>
-              <LoginForm
-                setAuthenticated={setAuthenticated}
-                setUser={setUser}
-              />
-            </Route>
+              </OrderContext.Provider>
+          </Route>
+          
+          {/* Route for login */}
+          <Route exact path='/users/login'>
+            <LoginForm
+              setAuthenticated={setAuthenticated}
+              setUser={setUser}
+            />
+          </Route>
 
-            {/* Route for creating user */}
-            <Route exact path='/users/register'>
-              <UserForm
-                setAuthenticated={setAuthenticated}
-                setUser={setUser}
-              />
-            </Route>
+          {/* Route for creating user */}
+          <Route exact path='/users/register'>
+            <UserForm
+              setAuthenticated={setAuthenticated}
+              setUser={setUser}
+            />
+          </Route>
 
-            <Route exact path='/admin/menu'>
+          <Route exact path='/admin/menu'>
+            <CategoryContext.Provider
+              value={{ categoryState: category, categoryDispatch: categoryDispatch }}
+            >
               <EditMenu />
-            </Route>
+            </CategoryContext.Provider>
+          </Route>
 
-            {/* Route for redirection */}
-            <Route><Redirect to='/' /></Route>
-          </Switch>
-        </BrowserRouter>
-      </OrderContext.Provider>
+          {/* Route for redirection */}
+          <Route><Redirect to='/' /></Route>
+        </Switch>
+      </BrowserRouter>
   );
 }
 

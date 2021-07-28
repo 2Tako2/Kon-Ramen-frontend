@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
 import CategoryFormModal from '../components/forms/CategoryFormModal.js';
 import ItemFormModal from '../components/forms/ItemFormModal.js';
 import {BiEdit, BiTrash} from 'react-icons/bi';
+import { CategoryContext } from '../App.js';
+import { CATEGORY_ACTIONS } from '../useReducer/categoryReducer.js';
 
 const Main = styled.div`
     width: 100vw;
@@ -117,12 +119,10 @@ const CreateBtn = styled.button`
 `;
 
 export default function EditMenu() {
+    const categoryContext = useContext(CategoryContext);
     const [menu, setMenu] = useState([])
     const [categoryModal, setCategoryModal] = useState(false)
     const [itemModal, setItemModal] = useState(false)
-    const [editingMode, setEditingMode] = useState(false)
-    const [selectedCategory, setSelectedCategory] = useState({ "_id": "", "name": selectedCategory.name, "published": false });
-    // const [selectedItem, setSelectedItem] = useState(null);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_BACKEND}/categories/all`)
@@ -133,18 +133,13 @@ export default function EditMenu() {
 
     return (
         <Main>
-            {console.log(selectedCategory)}
             <CategoryFormModal 
                 isOpen={categoryModal}
                 closeModal={() => setCategoryModal(false)}
-                editingMode={editingMode}
-                selectedCategory={selectedCategory}
             />
             <ItemFormModal
                 isOpen={itemModal}
                 closeModal={() => setItemModal(false)}
-                editingMode={editingMode}
-                categories={menu}
             />
 
             <H1>Edit Menu</H1>
@@ -160,7 +155,7 @@ export default function EditMenu() {
                     Create New Item +
                 </CreateBtn>
             </BtnContainer>
-            {menu.map((category, index) =>                    
+            {menu.map(category =>                    
                 <Table key={category._id}>
                     <li className='category-row'>
                         {category.name}
@@ -170,9 +165,15 @@ export default function EditMenu() {
                         <button
                             className='category-edit-btn'
                             onClick={() => {
-                                setSelectedCategory(category)
-                                setEditingMode(true)
-                                setCategoryModal(true)
+                                categoryContext.categoryDispatch({
+                                    type: CATEGORY_ACTIONS.SELECT_CATEGORY,
+                                    value: {
+                                        _id: category._id,
+                                        published: category.published,
+                                        name: category.name
+                                    }
+                                });
+                                setCategoryModal(true);
                             }}
                         >
                             <BiEdit />
@@ -194,8 +195,6 @@ export default function EditMenu() {
                                 <button
                                     className='item-edit-btn'
                                     onClick={() => {
-                                        // setSelectedCategory()
-                                        setEditingMode(true);
                                         setItemModal(true);
                                     }}
                                 >

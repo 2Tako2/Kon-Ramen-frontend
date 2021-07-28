@@ -27,22 +27,6 @@ export const orderReducer = (order, action) => {
             return {...order, pickupTime: action.value};
         case ACTIONS.ONCHANGE_INSTRUCTION:
             return {...order, instruction: action.value};
-        // // action.value = { index, qty }
-        // case ACTIONS.ADD_ITEM_BY_N: {
-        //     let newList2 = order.orderItems.slice()
-        //     let qty = action.value.qty
-        //     console.log(newList2[action.value.index].qty)
-        //     console.log(action.value.qty)
-        //     newList2[action.value.index].qty += qty
-        //     return {...order, orderItems: newList2}
-        // }
-        // // action.value = index
-        // case ACTIONS.SUBTRACT_ITEM_BY_1: {
-        //   let newList = order.orderItems.slice()
-        //   newList[action.value].qty --
-        //   return {...order, orderItems: newList}
-        // }
-        // action.value = { itemId, name, unitPrice}
         case ACTIONS.ADD_ITEM_TO_ORDER: {
             let newSubTotal = order.subTotal + action.value.unitPrice
             return ({
