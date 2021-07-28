@@ -38,20 +38,17 @@ export default function Navbar ({authenticated, handleLogout, user}) {
                                 <p className='nav-link-name'>Order Online Now!</p>
                             </Link>
                         </li>
-                        {/* {authenticated &&
+                        {
+                            (user.role==='admin') ?
                             <li className='nav-link'>
-                                <Link to='/user/edit'>
-                                    <MdAccountCircle className='nav-icon' />
-                                    <p className='nav-link-name'>Edit Account</p>
+                                <Link to='/admin/menu'>
+                                    <BiFoodMenu className='nav-icon' />
+                                    <p className='nav-link-name'>Edit Menu</p>
                                 </Link>
                             </li>
-                        } */}
-                        <li className='nav-link'>
-                            <Link to='/admin/menu'>
-                                <BiFoodMenu className='nav-icon' />
-                                <p className='nav-link-name'>Edit Menu</p>
-                            </Link>
-                        </li>
+                            :
+                            null
+                        }
                         <li className='nav-link'>
                             {authenticated ? 
                                 <button
@@ -60,7 +57,8 @@ export default function Navbar ({authenticated, handleLogout, user}) {
                                 >
                                     <BiLogOut className='nav-icon' />
                                     <p className='nav-link-name'>Log Out</p>
-                                </button> :
+                                </button>
+                                :
                                 <Link to='/users/login'>
                                     <BiLogIn className='nav-icon' />
                                     <p className='nav-link-name'>Log In</p>
@@ -69,7 +67,7 @@ export default function Navbar ({authenticated, handleLogout, user}) {
                         </li>
                     </ul>
                 </div>
-                    {user &&
+                    {authenticated &&
                         <div className='logged-in-user-container'>
                             <p className='logged-in-user'>Hi, {user.email}</p>
                         </div>

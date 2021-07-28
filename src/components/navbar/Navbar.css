@@ -52,6 +52,7 @@ nav {
     flex-direction: column;
     height: 300px;
     justify-content: space-around;
+    align-items: center;
 }
 
 .hide-nav{
@@ -64,6 +65,9 @@ nav {
 .nav-link {
     padding: 0;
     list-style: none;
+    position: relative;
+    width: 220px;
+    height: 50px;
 }
 
 .nav-link a {
@@ -83,6 +87,8 @@ nav {
 .nav-link-name{
     margin: 0;
     font-size: 0.9rem;
+    width: 120px;
+    text-align: center;
 }
 
 .logout-btn{
@@ -90,7 +96,11 @@ nav {
     border: none;
     color: #fff;
     cursor: pointer;
-    margin: auto;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -10% );
+    display: flex;
 }
 
 .logged-in-user-container{
@@ -125,5 +135,10 @@ nav {
 
     .nav-link a{
         flex-direction: column;
+    }
+
+    .logout-btn{
+        flex-direction: column;
+        align-items: center;
     }
 }
