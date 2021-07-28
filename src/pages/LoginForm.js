@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { EmailInput, PasswordInput, FormBtn } from '../components/formComponents';
+import { EmailInput, PasswordInput, FormBtn } from '../components/forms/formComponents';
 const Main = styled.main`
     width: 100vw;
     max-width: 900px;

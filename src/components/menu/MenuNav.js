@@ -1,7 +1,6 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {AiOutlineShoppingCart} from 'react-icons/ai';
-import { MenuContext } from '../../App.js';
 
 const MenuContainer = styled.div`
     width: 97vw;
@@ -40,14 +39,13 @@ const ShoppingCartIcon = styled.button`
     cursor: pointer;
 `;
 
-export default function MenuNav(props){
-    const menuContext = useContext(MenuContext);
+export default function MenuNav({menu, openModal}){
 
     return(
         <MenuContainer>
+            {/* Rendering categories */}
             <Categories>
-                {/* Rendering categories */}
-                {menuContext.menuState.map(category => (
+                {menu.map(category => (
                     <Category key={category._id}>
                         <a href={`#${category.name}`}>
                             {category.name}
@@ -55,7 +53,9 @@ export default function MenuNav(props){
                     </Category>
                 ))}
             </Categories>
-            <ShoppingCartIcon onClick={props.openModal}>
+
+            {/* Rendering shopping cart */}
+            <ShoppingCartIcon onClick={openModal}>
                 <AiOutlineShoppingCart />
             </ShoppingCartIcon>
         </MenuContainer>

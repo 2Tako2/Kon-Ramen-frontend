@@ -176,12 +176,20 @@ export function CheckBoxInput(props){
     return (
         <CenterWrapper>
             <Label>{props.labelLeft}</Label>
-            <CheckBoxField 
-                type='checkbox'
-                name={props.name}
-                onChange={props.onChange}
-                value={true}
+            {props.value ? 
+                <CheckBoxField 
+                    type='checkbox'
+                    name={props.name}
+                    onChange={props.onChange}
+                    checked
                 />
+                :
+                <CheckBoxField 
+                    type='checkbox'
+                    name={props.name}
+                    onChange={props.onChange}
+                />
+            }
             <Label>{props.labelRight}</Label>
         </CenterWrapper>
     )

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import logo from '../../imgs/logo.png';
 import {GiHamburgerMenu, GiNoodles} from 'react-icons/gi';
 import {IoCloseSharp} from 'react-icons/io5';
-import {BiLogOut, BiLogIn} from 'react-icons/bi';
+import {BiLogOut, BiLogIn, BiFoodMenu} from 'react-icons/bi';
 // import {MdAccountCircle} from 'react-icons/md';
 import {HiHome} from 'react-icons/hi';
 
@@ -47,6 +47,12 @@ export default function Navbar ({authenticated, handleLogout, user}) {
                             </li>
                         } */}
                         <li className='nav-link'>
+                            <Link to='/admin/menu'>
+                                <BiFoodMenu className='nav-icon' />
+                                <p className='nav-link-name'>Edit Menu</p>
+                            </Link>
+                        </li>
+                        <li className='nav-link'>
                             {authenticated ? 
                                 <button
                                     className='logout-btn'
@@ -62,8 +68,12 @@ export default function Navbar ({authenticated, handleLogout, user}) {
                             }
                         </li>
                     </ul>
-                    {user && <p>Hi, {user.email}</p>}
                 </div>
+                    {user &&
+                        <div className='logged-in-user-container'>
+                            <p className='logged-in-user'>Hi, {user.email}</p>
+                        </div>
+                    }
             </div>
         </nav>
     )

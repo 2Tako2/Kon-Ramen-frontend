@@ -20,13 +20,17 @@ const ItemCardContainer = styled.div`
 `;
 
 const ItemThumbnailBtn = styled.button`
+    width: 150px;
+    height: 150px;
+    margin: auto;
     background-color: transparent;
     border: none;
     cursor: pointer;
 `;
 
 const ItemThumbnail = styled.img`
-    width: 150px;
+    max-width: 150px;
+    width: auto;
     height: 150px;
     margin: 10px auto;
 `;
@@ -43,7 +47,7 @@ const ItemPrice = styled.p`
     font-size: 1.2rem;
 `;
 
-export default function ItemCard(props) {
+export default function ItemCard({name, unitPrice, thumbnail, description}) {
     const orderContext = useContext(OrderContext);
     const [itemModal, setItemModal] = useState(false);
 
@@ -52,24 +56,23 @@ export default function ItemCard(props) {
             <ItemModal
                 isOpen={itemModal}
                 closeModal={() => setItemModal(false)}
-                itemId={props.itemId}
-                name={props.name}
-                unitPrice={props.unitPrice}
-                thumbnail={props.thumbnail}
-                description={props.description}
+                name={name}
+                unitPrice={unitPrice}
+                thumbnail={thumbnail}
+                description={description}
             />
             <ItemThumbnailBtn onClick={() => setItemModal(true)}>
-                <ItemThumbnail src={props.thumbnail} alt='item thumbnail'/>
+                <ItemThumbnail src={thumbnail} alt='item thumbnail'/>
             </ItemThumbnailBtn>
-            <ItemName>{props.name}</ItemName>
-            <ItemPrice>AUD $ {(props.unitPrice/100).toFixed(2)}</ItemPrice>
+            <ItemName>{name}</ItemName>
+            <ItemPrice>AUD $ {(unitPrice/100).toFixed(2)}</ItemPrice>
             <Button 
                 content="ADD +"
                 onClick={() => orderContext.orderDispatch({
                     type: ACTIONS.ADD_ITEM_TO_ORDER,
                     value: {
-                        name: props.name,
-                        unitPrice: props.unitPrice
+                        name: name,
+                        unitPrice: unitPrice
                     }
                 })}
             />
