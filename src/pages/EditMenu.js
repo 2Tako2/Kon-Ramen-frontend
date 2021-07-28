@@ -128,18 +128,43 @@ export default function EditMenu() {
         axios.get(`${process.env.REACT_APP_BACKEND}/categories/all`)
             .then(res => setMenu(res.data))
             .catch(err => console.log(err));
-    },[itemModal, categoryModal])
+    },[categoryContext])
 
+    const deleteCategory = (id) => {
+        axios.delete(`http://localhost:5000/categories/${id}`)
+            .then(res => {
+                window.location = '/admin/menu';
+                alert(res.data);
+            })
+            .catch(err => console.log(err));
+    }
 
+    const deleteItem = (id) => {
+        axios.delete(`http://localhost:5000/items/${id}`)
+            .then(res => {
+                window.location='/admin/menu';
+                alert(res.data);
+            })
+    }
     return (
         <Main>
             <CategoryFormModal 
                 isOpen={categoryModal}
-                closeModal={() => setCategoryModal(false)}
+                closeModal={() => {
+                    setCategoryModal(false)
+                    categoryContext.categoryDispatch({
+                        type: CATEGORY_ACTIONS.RESET_CATEGORY
+                    })
+                }}
             />
             <ItemFormModal
                 isOpen={itemModal}
-                closeModal={() => setItemModal(false)}
+                closeModal={() => {
+                    setItemModal(false)
+                    categoryContext.categoryDispatch({
+                        type: CATEGORY_ACTIONS.RESET_CATEGORY
+                    })
+                }}
             />
 
             <H1>Edit Menu</H1>
@@ -150,7 +175,13 @@ export default function EditMenu() {
                     Create New Category +
                 </CreateBtn>
                 <CreateBtn
-                    onClick={() => setItemModal(true)}
+                    onClick={() => {
+                        categoryContext.categoryDispatch({
+                            type: CATEGORY_ACTIONS.LOAD_CATEGORIES,
+                            value: menu
+                        })
+                        setItemModal(true)
+                    }}
                 >
                     Create New Item +
                 </CreateBtn>
@@ -178,6 +209,12 @@ export default function EditMenu() {
                         >
                             <BiEdit />
                         </button>
+                        <button
+                            className='category-edit-btn'
+                            onClick={() => deleteCategory(category._id)}
+                        >
+                            <BiTrash />
+                        </button>
                     </li>
                     <li className='header-row'>
                         <div className='col-1-header header'>Thumbnail</div>
@@ -195,14 +232,26 @@ export default function EditMenu() {
                                 <button
                                     className='item-edit-btn'
                                     onClick={() => {
-                                        setItemModal(true);
+                                        categoryContext.categoryDispatch({
+                                            type: CATEGORY_ACTIONS.SELECT_ITEM,
+                                            value: {
+                                                _id: item._id,
+                                                published: item.published,
+                                                name: item.name,
+                                                unitPrice: item.unitPrice,
+                                                description: item.description,
+                                                category: item.category,
+                                                categories: menu
+                                            }
+                                        })
+                                        setItemModal(true)
                                     }}
                                 >
                                     <BiEdit />
                                 </button>
                                 <button
                                     className='item-edit-btn'
-                                    onClick={() => console.log(item._id)}
+                                    onClick={() => deleteItem(item._id)}
                                 >
                                     <BiTrash />
                                 </button>

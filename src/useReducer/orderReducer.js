@@ -45,7 +45,6 @@ export const orderReducer = (order, action) => {
         }
         case ACTIONS.REMOVE_ITEM_FROM_ORDER: {
             let newSubTotal = order.subTotal - order.orderItems[action.value].unitPrice
-            console.log(newSubTotal)
             return {
               ...order,
               orderItems: order.orderItems.filter((item, index) => index !== action.value),

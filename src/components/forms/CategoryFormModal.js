@@ -14,7 +14,7 @@ export default function CategoryFormModal({isOpen, closeModal}) {
 
         if(categoryContext.categoryState.editingMode){
             axios.put(
-                `http://localhost:5000/categories/${categoryContext.categoryState._id}`,
+                `http://localhost:5000/categories/${categoryContext.categoryState.id}`,
                 {
                     "published": categoryContext.categoryState.published,
                     "name": categoryContext.categoryState.name
@@ -22,9 +22,7 @@ export default function CategoryFormModal({isOpen, closeModal}) {
             )
                 .then( res => {
                     closeModal()
-                    categoryContext.categoryDispatch({
-                        type: CATEGORY_ACTIONS.RESET_CATEGORY
-                    })
+                    window.location='/admin/menu'
                     alert(`Successfully updated ${categoryContext.categoryState.name} category`);
                 })
                 .catch( err => alert(err))
@@ -36,9 +34,7 @@ export default function CategoryFormModal({isOpen, closeModal}) {
             )
                 .then( res => {
                     closeModal()
-                    categoryContext.categoryDispatch({
-                        type: CATEGORY_ACTIONS.RESET_CATEGORY
-                    })
+                    window.location='/admin/menu'
                     alert(`Successfully created ${categoryContext.categoryState.name} category`);
                 })
                 .catch( err => alert(err))

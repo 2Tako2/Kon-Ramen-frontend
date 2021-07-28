@@ -53,7 +53,6 @@ function App() {
   
   return (
     <BrowserRouter className='App'>
-      {console.log(category)}
         <Navbar
           authenticated={authenticated}
           handleLogout={handleLogout}
