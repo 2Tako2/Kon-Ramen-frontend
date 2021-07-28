@@ -116,7 +116,7 @@ export default function EditMenu() {
     const [editingMode, setEditingMode] = useState(false)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories/all')
+        axios.get(`${process.env.REACT_APP_BACKEND}/categories/all`)
             .then(res => setMenu(res.data))
             .catch(err => console.log(err));
     })

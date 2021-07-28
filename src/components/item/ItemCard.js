@@ -20,13 +20,17 @@ const ItemCardContainer = styled.div`
 `;
 
 const ItemThumbnailBtn = styled.button`
+    width: 150px;
+    height: 150px;
+    margin: auto;
     background-color: transparent;
     border: none;
     cursor: pointer;
 `;
 
 const ItemThumbnail = styled.img`
-    width: 150px;
+    max-width: 150px;
+    width: auto;
     height: 150px;
     margin: 10px auto;
 `;

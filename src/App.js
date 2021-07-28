@@ -54,12 +54,10 @@ function App() {
         value={{ orderState: order, orderDispatch: orderDispatch}}
       >
         <BrowserRouter className='App'>
-          <Link to='/item'>Item</Link>
-          <br />
-          <Link to='/category'>Category</Link>
+          {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
           <p>email: admin@admin.com pw:000000 *6x0s*</p>
-
-
+          {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
+          
           <Navbar
             authenticated={authenticated}
             handleLogout={handleLogout}
