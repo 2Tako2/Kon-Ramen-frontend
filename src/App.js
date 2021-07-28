@@ -28,7 +28,7 @@ function App() {
   ////////////////////////////// User ////////////////////////////////////
   
     const [authenticated, setAuthenticated] = useState(false)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState({'role': ''})
   
     useEffect(() => {
       axios.get('http://localhost:5000/users/cookie', {withCredentials: true})
@@ -44,7 +44,7 @@ function App() {
         .then((res) => {
           window.location = '/';
           setAuthenticated(false);
-          setUser(null);
+          setUser({'role': ''});
           alert('Logged out');
         })
         .catch(err => alert(err))
@@ -91,11 +91,16 @@ function App() {
           </Route>
 
           <Route exact path='/admin/menu'>
-            <CategoryContext.Provider
-              value={{ categoryState: category, categoryDispatch: categoryDispatch }}
-            >
-              <EditMenu />
-            </CategoryContext.Provider>
+            {
+              (authenticated && user.role==='admin') ?
+              <CategoryContext.Provider
+                value={{ categoryState: category, categoryDispatch: categoryDispatch }}
+              >
+                <EditMenu />
+              </CategoryContext.Provider>
+              :
+              <Redirect to='/' />
+            }
           </Route>
 
           {/* Route for redirection */}

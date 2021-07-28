@@ -53,7 +53,7 @@ export default function LoginForm({setAuthenticated, setUser}) {
                     setUser(res.data)
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => alert('Incorrect email or password'))
     }
 
 
