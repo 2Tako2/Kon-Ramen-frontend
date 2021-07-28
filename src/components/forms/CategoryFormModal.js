@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './FormModal.css';
 import Modal from 'react-modal';
 import axios from 'axios';
 
 import { CheckBoxInput, TextInput, FormBtn } from './formComponents.js';
 
-export default function CategoryFormModal(props) {
+export default function CategoryFormModal({isOpen, closeModal, editingMode, selectedCategory}) {
 
-    const [category, setCategory] = useState({ "name": "", "published": false })
+    const [category, setCategory] = useState({ "_id": "", "name": selectedCategory.name, "published": false })    
 
     const clearCategory = () => {
         setCategory({ "name": "", "published": false })
@@ -19,7 +19,7 @@ export default function CategoryFormModal(props) {
             withCredential: true,
         })
         .then( res => {
-            props.closeModal()
+            closeModal()
             clearCategory();
             alert(`Successfully created ${category.name} category`);
         })
@@ -29,13 +29,13 @@ export default function CategoryFormModal(props) {
 
     return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.closeModal}
+            isOpen={isOpen}
+            onRequestClose={closeModal}
             className='form-modal'
             ariaHideApp={false}
         >   
-            <button className='close-btn' onClick={props.closeModal}>x</button>
-            <header className='modal-header'>{props.editingMode ? 'Edit Category' : 'Create Category'}</header>
+            <button className='close-btn' onClick={closeModal}>x</button>
+            <header className='modal-header'>{editingMode ? 'Edit Category' : 'Create Category'}</header>
             <form onSubmit={postCategory}>
                 <CheckBoxInput
                     name='published'

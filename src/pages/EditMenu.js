@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import CategoryFormModal from '../components/forms/CategoryFormModal.js';
 import ItemFormModal from '../components/forms/ItemFormModal.js';
-import {BiEdit} from 'react-icons/bi';
+import {BiEdit, BiTrash} from 'react-icons/bi';
 
 const Main = styled.div`
     width: 100vw;
@@ -27,6 +27,10 @@ const Table = styled.ul`
     margin: 20px auto;
     list-style: none;
     width: 95%;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     & .category-row{
         font-size: 1.7rem;
@@ -36,6 +40,7 @@ const Table = styled.ul`
         background-color: rgb(206, 46, 46);
         color: white;
         font-weight: bold;
+
     }
 
     & .category-status{ font-size: 1rem; padding: 0 10px; }
@@ -47,6 +52,7 @@ const Table = styled.ul`
         margin-bottom: 10px;
         justify-content: space-between;
         align-items: center;
+        overflow: hidden;
     }
 
     & .item-row{
@@ -56,22 +62,23 @@ const Table = styled.ul`
         align-items: center;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         padding: 5px 0;
+        overflow: hidden;
     }
 
     & .item-row:hover{ background: rgb(187, 187, 187); }
-    & .thumbnail{margin-left: auto; margin-right: auto; height: 100px;}
-    & .col-1-header{ width: 180px; text-align: center;}
+    & .thumbnail{margin-left: auto; margin-right: auto; height: 100px; max-width: 120px}
+    & .col-1-header{ width: 220px; text-align: center;}
     & .col-1{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 180px;
+        min-width: 220px;
         text-align: center;
     }
-    & .col-2{ width: 100px; text-align: center; }
-    & .col-3{ width: 80px; text-align: center; }
-    & .col-4{ width: 100px; text-align: center; }
-    & .col-5{ width:30%; text-align: center; }
+    & .col-2{ min-width: 100px; text-align: center; }
+    & .col-3{ min-width: 80px; text-align: center; }
+    & .col-4{ min-width: 100px; text-align: center; }
+    & .col-5{ min-width:30%; text-align: center; }
     & .header{ color: white; }
     & .empty-row{ text-align: center; font-size: 1.3rem; }
     
@@ -114,21 +121,24 @@ export default function EditMenu() {
     const [categoryModal, setCategoryModal] = useState(false)
     const [itemModal, setItemModal] = useState(false)
     const [editingMode, setEditingMode] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState({ "_id": "", "name": selectedCategory.name, "published": false });
+    // const [selectedItem, setSelectedItem] = useState(null);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_BACKEND}/categories/all`)
             .then(res => setMenu(res.data))
             .catch(err => console.log(err));
-    })
+    },[itemModal, categoryModal])
 
 
     return (
         <Main>
-
+            {console.log(selectedCategory)}
             <CategoryFormModal 
                 isOpen={categoryModal}
                 closeModal={() => setCategoryModal(false)}
                 editingMode={editingMode}
+                selectedCategory={selectedCategory}
             />
             <ItemFormModal
                 isOpen={itemModal}
@@ -150,7 +160,7 @@ export default function EditMenu() {
                     Create New Item +
                 </CreateBtn>
             </BtnContainer>
-            {menu.map(category =>                    
+            {menu.map((category, index) =>                    
                 <Table key={category._id}>
                     <li className='category-row'>
                         {category.name}
@@ -159,7 +169,11 @@ export default function EditMenu() {
                         </span>
                         <button
                             className='category-edit-btn'
-                            onClick={() => console.log(category._id)}
+                            onClick={() => {
+                                setSelectedCategory(category)
+                                setEditingMode(true)
+                                setCategoryModal(true)
+                            }}
                         >
                             <BiEdit />
                         </button>
@@ -179,9 +193,19 @@ export default function EditMenu() {
                             <div className='col-1'>
                                 <button
                                     className='item-edit-btn'
-                                    onClick={() => console.log(item._id)}
+                                    onClick={() => {
+                                        // setSelectedCategory()
+                                        setEditingMode(true);
+                                        setItemModal(true);
+                                    }}
                                 >
                                     <BiEdit />
+                                </button>
+                                <button
+                                    className='item-edit-btn'
+                                    onClick={() => console.log(item._id)}
+                                >
+                                    <BiTrash />
                                 </button>
                                 <img className='thumbnail' src={item.thumbnailUrl} alt="thumbnail"/>
                             </div>
