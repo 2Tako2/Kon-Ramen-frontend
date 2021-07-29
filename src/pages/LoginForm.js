@@ -42,7 +42,7 @@ export default function LoginForm({setAuthenticated, setUser}) {
         e.preventDefault()
 
         axios.post(
-            'http://localhost:5000/users/login',
+            `${process.env.REACT_APP_BACKEND}/users/login`,
             {email, password},
             {withCredentials: true}
         )

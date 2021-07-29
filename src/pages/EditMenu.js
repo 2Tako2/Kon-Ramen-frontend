@@ -131,7 +131,7 @@ export default function EditMenu() {
     },[categoryContext])
 
     const deleteCategory = (id) => {
-        axios.delete(`http://localhost:5000/categories/${id}`)
+        axios.delete(`${process.env.REACT_APP_BACKEND}/categories/${id}`)
             .then(res => {
                 window.location = '/admin/menu';
                 alert(res.data);
@@ -140,7 +140,7 @@ export default function EditMenu() {
     }
 
     const deleteItem = (id) => {
-        axios.delete(`http://localhost:5000/items/${id}`)
+        axios.delete(`${process.env.REACT_APP_BACKEND}/items/${id}`)
             .then(res => {
                 window.location='/admin/menu';
                 alert(res.data);

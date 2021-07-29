@@ -15,7 +15,7 @@ export default function OrderingPage() {
     
     const filteredMenu = menu.filter(category => (category.published === true) && (category.items.length > 0))
     useEffect(() => {
-        axios.get('http://localhost:5000/categories/')
+        axios.get(`${process.env.REACT_APP_BACKEND}/categories/`)
         .then(res => setMenu(res.data))
         .catch(err => console.log(err));
     },[])

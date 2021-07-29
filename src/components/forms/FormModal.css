@@ -21,7 +21,8 @@
     cursor: pointer;
 }
 
-form{
+.item-form,
+.category-form {
     width: 100%;
     max-width: 250px;
     display: flex;

@@ -1,8 +1,8 @@
 
 export const initialOrder = {
-    completed: false,
     takeAway: true,
     pickupTime: new Date(),
+    orderTime: new Date(),
     instruction: '',
     userId: '',
     subTotal: 0,

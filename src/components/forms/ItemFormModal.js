@@ -20,7 +20,7 @@ export default function ItemFormModal(props) {
         itemFormData.append('category', categoryContext.categoryState.category)
         itemFormData.append('thumbnail', categoryContext.categoryState.thumbnail)
         
-        axios.post('http://localhost:5000/items', itemFormData)
+        axios.post(`${process.env.REACT_APP_BACKEND}/items`, itemFormData)
             .then( res => {
                 props.closeModal();
                 alert(`Successfully created ${categoryContext.categoryState.name} item`);
@@ -37,7 +37,7 @@ export default function ItemFormModal(props) {
         >
             <button className='close-btn' onClick={props.closeModal}>x</button>
             <header className='modal-header'>{categoryContext.categoryState.editingMode ? 'Edit Item' : 'Create Item'}</header>
-            <form onSubmit={createItem}>
+            <form className='item-form' onSubmit={createItem}>
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'

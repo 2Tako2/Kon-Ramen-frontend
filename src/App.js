@@ -11,6 +11,8 @@ import UserForm from './pages/UserForm.js';
 import LoginForm from './pages/LoginForm.js';
 import EditMenu from './pages/EditMenu.js';
 
+import ReceiptPage from './pages/ReceiptPage';
+
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
 import { initialCategory, categoryReducer } from './useReducer/categoryReducer';
@@ -31,7 +33,7 @@ function App() {
     const [user, setUser] = useState({'role': ''})
   
     useEffect(() => {
-      axios.get('http://localhost:5000/users/cookie', {withCredentials: true})
+      axios.get('https://konramen.herokuapp.com/users/cookie', {withCredentials: true})
         .then(response => {
           setAuthenticated(true)
           setUser(response.data)
@@ -40,7 +42,7 @@ function App() {
     }, [])
 
     const handleLogout = () => {
-      axios.get('http://localhost:5000/users/logout', {withCredentials: true})
+      axios.get(`${process.env.REACT_APP_BACKEND}/users/logout`, {withCredentials: true})
         .then((res) => {
           window.location = '/';
           setAuthenticated(false);
@@ -65,15 +67,20 @@ function App() {
             <HomePage />
           </Route>
           
-          {/* Route for ordering */}
-          <Route exact path='/order'>
-            <OrderContext.Provider
-              value={{ orderState: order, orderDispatch: orderDispatch }}
-            >
-              <OrderingPage />
-              </OrderContext.Provider>
-          </Route>
-          
+          <OrderContext.Provider
+          value={{ orderState: order, orderDispatch: orderDispatch }}
+          >
+            {/* Route for ordering */}
+            <Route exact path='/order'>
+                <OrderingPage />
+            </Route>
+
+            {/* Route for receipt */}
+            <Route path='/receipt/:id'>
+              <ReceiptPage />
+            </Route>
+          </OrderContext.Provider>
+
           {/* Route for login */}
           <Route exact path='/users/login'>
             <LoginForm

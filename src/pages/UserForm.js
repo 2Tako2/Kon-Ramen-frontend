@@ -31,7 +31,7 @@ export default function UserForm({setAuthenticated, setUser}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5000/users/register',{email, password}, {withCredentials: true})
+        axios.post(`${process.env.REACT_APP_BACKEND}/users/register`,{email, password}, {withCredentials: true})
             .then(res => {
                 window.location = '/';
                 setAuthenticated(true);

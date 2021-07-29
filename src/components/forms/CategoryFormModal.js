@@ -14,7 +14,7 @@ export default function CategoryFormModal({isOpen, closeModal}) {
 
         if(categoryContext.categoryState.editingMode){
             axios.put(
-                `http://localhost:5000/categories/${categoryContext.categoryState.id}`,
+                `${process.env.REACT_APP_BACKEND}/categories/${categoryContext.categoryState.id}`,
                 {
                     "published": categoryContext.categoryState.published,
                     "name": categoryContext.categoryState.name
@@ -28,7 +28,7 @@ export default function CategoryFormModal({isOpen, closeModal}) {
                 .catch( err => alert(err))
         } else {
             axios.post(
-                'http://localhost:5000/categories/',
+                `${process.env.REACT_APP_BACKEND}/categories/`,
                 categoryContext.categoryState,
                 { withCredential: true}
             )
@@ -50,7 +50,7 @@ export default function CategoryFormModal({isOpen, closeModal}) {
         >   
             <button className='close-btn' onClick={closeModal}>x</button>
             <header className='modal-header'>{categoryContext.categoryState.editingMode ? 'Edit Category' : 'Create Category'}</header>
-            <form onSubmit={handleSubmit}>
+            <form className='category-form' onSubmit={handleSubmit}>
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'
