@@ -68,7 +68,7 @@ export default function OrderListModal(props) {
                     <button
                         className='confirm-btn'
                         onClick={handleConfirm}
-                    >MAKE PAYMENT</button>
+                    >CONFIRM ORDER</button>
                 </div>
             </div>
         </Modal>
