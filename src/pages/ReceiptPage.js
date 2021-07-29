@@ -74,26 +74,24 @@ export default function ReceiptPage() {
             <Row>
                 <P>Ordered at</P>
                 <P>
-                    {/* {format(Date(order.createdAt),"dd'-'MM'-'YYY' 'HH':'mm")} */}
-                    {/* {
-                    format(
-                        new Date(order.createdAt),
-                        "dd'-'MM'-'YYY' 'HH':'mm"
-                    )} */}
+                    
+                    {new Date(order.createdAt).toDateString()}
                 </P>
             </Row>
             <Row>
                 <P>Pick up time :</P>
                 <P>
-                    {/* {console.log(new Date(order.pickupTime).toDay)} */}
-                    {/* {format(
-                        new Date(order.pickupTime),
-                        "dd'-'MM'-'YYY' 'HH':'mm"
-                    )} */}
+                    {new Date(order.pickupTime).toDateString()}
                 </P>
 
             </Row>
             <BoldP>ORDER SUMMERY</BoldP>
+            {console.log(order.orderItems)}
+            {/* {order.orderItems.slice().map(item => console.log(item))} */}
+
+
+
+
             {/* { order.orderItems.map(item => 
                 <Row>
                     <P>{item.name}</P>

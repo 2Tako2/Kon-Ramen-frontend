@@ -37,7 +37,7 @@ export default function ItemFormModal(props) {
         >
             <button className='close-btn' onClick={props.closeModal}>x</button>
             <header className='modal-header'>{categoryContext.categoryState.editingMode ? 'Edit Item' : 'Create Item'}</header>
-            <form onSubmit={createItem}>
+            <form className='item-form' onSubmit={createItem}>
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'

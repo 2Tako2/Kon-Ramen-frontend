@@ -50,7 +50,7 @@ export default function CategoryFormModal({isOpen, closeModal}) {
         >   
             <button className='close-btn' onClick={closeModal}>x</button>
             <header className='modal-header'>{categoryContext.categoryState.editingMode ? 'Edit Category' : 'Create Category'}</header>
-            <form onSubmit={handleSubmit}>
+            <form className='category-form' onSubmit={handleSubmit}>
                 <CheckBoxInput
                     name='published'
                     labelLeft='Hidden'
