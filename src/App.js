@@ -54,22 +54,25 @@ function App() {
   /////////////////////// End of User ////////////////////////////////////
   
   return (
-    <BrowserRouter className='App'>
-        <Navbar
-          authenticated={authenticated}
-          handleLogout={handleLogout}
-          user={user}
-        />
-        <Switch className='main-content'>
+    <OrderContext.Provider
+    value={{ orderState: order, orderDispatch: orderDispatch }}
+    >
+      <CategoryContext.Provider
+        value={{ categoryState: category, categoryDispatch: categoryDispatch }}
+      >
+        <BrowserRouter className='App'>
+          <Navbar
+            authenticated={authenticated}
+            handleLogout={handleLogout}
+            user={user}
+          />
+          <Switch className='main-content'>
 
-          {/* Route for home page */}
-          <Route exact path='/'>
-            <HomePage />
-          </Route>
+            {/* Route for home page */}
+            <Route exact path='/'>
+              <HomePage />
+            </Route>
           
-          <OrderContext.Provider
-          value={{ orderState: order, orderDispatch: orderDispatch }}
-          >
             {/* Route for ordering */}
             <Route exact path='/order'>
                 <OrderingPage />
@@ -79,41 +82,38 @@ function App() {
             <Route path='/receipt/:id'>
               <ReceiptPage />
             </Route>
-          </OrderContext.Provider>
 
-          {/* Route for login */}
-          <Route exact path='/users/login'>
-            <LoginForm
-              setAuthenticated={setAuthenticated}
-              setUser={setUser}
-            />
-          </Route>
+            {/* Route for login */}
+            <Route exact path='/users/login'>
+              <LoginForm
+                setAuthenticated={setAuthenticated}
+                setUser={setUser}
+                />
+            </Route>
 
-          {/* Route for creating user */}
-          <Route exact path='/users/register'>
-            <UserForm
-              setAuthenticated={setAuthenticated}
-              setUser={setUser}
-            />
-          </Route>
+            {/* Route for creating user */}
+            <Route exact path='/users/register'>
+              <UserForm
+                setAuthenticated={setAuthenticated}
+                setUser={setUser}
+                />
+            </Route>
 
-          <Route exact path='/admin/menu'>
-            {
-              (authenticated && user.role==='admin') ?
-              <CategoryContext.Provider
-                value={{ categoryState: category, categoryDispatch: categoryDispatch }}
-              >
+            <Route exact path='/admin/menu'>
+              {
+                (authenticated && user.role==='admin') ?
                 <EditMenu />
-              </CategoryContext.Provider>
-              :
-              <Redirect to='/' />
-            }
-          </Route>
+                :
+                <Redirect to='/' />
+              }
+            </Route>
 
-          {/* Route for redirection */}
-          <Route><Redirect to='/' /></Route>
-        </Switch>
-      </BrowserRouter>
+            {/* Route for redirection */}
+            <Route><Redirect to='/' /></Route>
+          </Switch>
+        </BrowserRouter>
+      </CategoryContext.Provider>
+    </OrderContext.Provider>
   );
 }
 

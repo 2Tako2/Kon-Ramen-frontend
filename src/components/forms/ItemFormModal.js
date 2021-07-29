@@ -20,12 +20,26 @@ export default function ItemFormModal(props) {
         itemFormData.append('category', categoryContext.categoryState.category)
         itemFormData.append('thumbnail', categoryContext.categoryState.thumbnail)
         
-        axios.post(`${process.env.REACT_APP_BACKEND}/items`, itemFormData)
-            .then( res => {
-                props.closeModal();
-                alert(`Successfully created ${categoryContext.categoryState.name} item`);
-            })
-            .catch(err => alert(err));
+        if(categoryContext.categoryState.editingMode){
+            axios.put(
+                `${process.env.REACT_APP_BACKEND}/items`,
+                itemFormData,
+                {withCredential: true}
+            )
+                .then(res => {
+                    closeModal()
+                    window.location='/admin/menu'
+                    alert(`Sucessfully upated ${categoryContext.categoryState.name} item`);
+                })
+                .catch( err => alert(err))
+        } else {
+            axios.post(`${process.env.REACT_APP_BACKEND}/items`, itemFormData)
+                .then( res => {
+                    props.closeModal();
+                    alert(`Successfully created ${categoryContext.categoryState.name} item`);
+                })
+                .catch(err => alert(err));
+        }
     }
 
     return (

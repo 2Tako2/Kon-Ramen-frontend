@@ -18,7 +18,8 @@ export default function CategoryFormModal({isOpen, closeModal}) {
                 {
                     "published": categoryContext.categoryState.published,
                     "name": categoryContext.categoryState.name
-                }
+                },
+                { withCredential: true}
             )
                 .then( res => {
                     closeModal()

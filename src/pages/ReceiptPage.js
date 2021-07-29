@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {format} from 'date-fns';
+// import {format} from 'date-fns';
 import axios from 'axios';
 
 import { useParams } from 'react-router';
@@ -59,12 +59,14 @@ const Hr = styled.hr``;
 export default function ReceiptPage() {
     const {id} = useParams();
     const [order, setOrder] = useState('')
-
+    
     useEffect(() =>{
         axios.get(`${process.env.REACT_APP_BACKEND}/orders/${id}`, {withCredentials: true})
             .then(res => setOrder(res.data))
             .catch(err => alert(err))
-    },[])
+            
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <Receipt>
