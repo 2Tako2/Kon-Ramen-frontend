@@ -27,7 +27,7 @@ export default function ItemFormModal(props) {
                 {withCredential: true}
             )
                 .then(res => {
-                    closeModal()
+                    props.closeModal()
                     window.location='/admin/menu'
                     alert(`Sucessfully upated ${categoryContext.categoryState.name} item`);
                 })
