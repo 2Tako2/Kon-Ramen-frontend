@@ -34,6 +34,20 @@ export default function OrderListModal(props) {
             />
     )
 
+
+    const handleConfirm = () => {
+        if(orderContext.orderState.orderItems.length === 0){
+            alert('Order list is empty')
+        } else {
+            axios.post(`${process.env.REACT_APP_BACKEND}/orders/`, orderContext.orderState)
+                .then(res => alert(res))
+                .catch(err => alert(err));
+            orderContext.orderDispatch({
+                type: ACTIONS.CONFIRM_ORDER
+            });
+            window.location='/receipt';
+        }
+    }
     return (
         <Modal
             isOpen={props.isOpen}
@@ -55,11 +69,7 @@ export default function OrderListModal(props) {
                     <PaymentSummary />
                     <button
                         className='confirm-btn'
-                        onClick={() =>
-                            axios.post(`${process.env.REACT_APP_BACKEND}/orders/`, orderContext.orderState)
-                                .then(res => alert(res))
-                                .catch(err => alert(err))
-                        }
+                        onClick={handleConfirm}
                     >MAKE PAYMENT</button>
                 </div>
             </div>

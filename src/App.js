@@ -11,6 +11,8 @@ import UserForm from './pages/UserForm.js';
 import LoginForm from './pages/LoginForm.js';
 import EditMenu from './pages/EditMenu.js';
 
+import ReceiptPage from './pages/ReceiptPage';
+
 // Importing reducers
 import { initialOrder, orderReducer } from './useReducer/orderReducer.js';
 import { initialCategory, categoryReducer } from './useReducer/categoryReducer';
@@ -65,15 +67,20 @@ function App() {
             <HomePage />
           </Route>
           
-          {/* Route for ordering */}
-          <Route exact path='/order'>
-            <OrderContext.Provider
-              value={{ orderState: order, orderDispatch: orderDispatch }}
-            >
-              <OrderingPage />
-              </OrderContext.Provider>
-          </Route>
-          
+          <OrderContext.Provider
+          value={{ orderState: order, orderDispatch: orderDispatch }}
+          >
+            {/* Route for ordering */}
+            <Route exact path='/order'>
+                <OrderingPage />
+            </Route>
+
+            {/* Route for receipt */}
+            <Route exact path='/receipt'>
+              <ReceiptPage />
+            </Route>
+          </OrderContext.Provider>
+
           {/* Route for login */}
           <Route exact path='/users/login'>
             <LoginForm

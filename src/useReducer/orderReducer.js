@@ -1,13 +1,14 @@
 
 export const initialOrder = {
-    completed: false,
     takeAway: true,
     pickupTime: new Date(),
+    orderTime: new Date(),
     instruction: '',
     userId: '',
     subTotal: 0,
     serviceCharge: 30,
-    orderItems: []
+    orderItems: [],
+    confirmed: false
 }
 
 export const ACTIONS = {
@@ -15,7 +16,8 @@ export const ACTIONS = {
     ONCHANGE_PICKUP_TIME: 'ONCHANGE_PICKUP_TIME',
     ONCHANGE_INSTRUCTION: 'ONCHANGE_INSTRUCTION',
     ADD_ITEM_TO_ORDER: 'ADD_ITEM_TO_ORDER',
-    REMOVE_ITEM_FROM_ORDER: 'REMOVE_ITEM_FROM_ORDER'
+    REMOVE_ITEM_FROM_ORDER: 'REMOVE_ITEM_FROM_ORDER',
+    CONFIRM_ORDER: 'CONFIRM_ORDER'
 }
 
 
@@ -50,6 +52,9 @@ export const orderReducer = (order, action) => {
               orderItems: order.orderItems.filter((item, index) => index !== action.value),
               subTotal: newSubTotal
             }
+        }
+        case ACTIONS.CONFIRM_ORDER: {
+            return { ...order, confirmed: true}
         }
         default:
             return order;
