@@ -29,7 +29,7 @@ export default function ItemFormModal(props) {
                 .then(res => {
                     props.closeModal()
                     window.location='/admin/menu'
-                    alert(`Sucessfully upated ${categoryContext.categoryState.name} item`);
+                    alert(`Successfully updated ${categoryContext.categoryState.name} item`);
                 })
                 .catch( err => alert(err))
         } else {
