@@ -40,12 +40,10 @@ export default function OrderListModal(props) {
             alert('Order list is empty')
         } else {
             axios.post(`${process.env.REACT_APP_BACKEND}/orders/`, orderContext.orderState)
-                .then(res => alert(res))
+                .then(res => {
+                    window.location=`/receipt/${res.data}`
+                })
                 .catch(err => alert(err));
-            orderContext.orderDispatch({
-                type: ACTIONS.CONFIRM_ORDER
-            });
-            window.location='/receipt';
         }
     }
     return (

@@ -1,7 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { OrderContext } from '../App';
 import {format} from 'date-fns';
+import axios from 'axios';
+
+import { useParams } from 'react-router';
 
 
 const Receipt = styled.div`
@@ -55,7 +57,15 @@ const Row = styled.div`
 const Hr = styled.hr``;
 
 export default function ReceiptPage() {
-    const orderContext = useContext(OrderContext);
+    const {id} = useParams();
+    const [order, setOrder] = useState('')
+
+    useEffect(() =>{
+        axios.get(`${process.env.REACT_APP_BACKEND}/orders/${id}`, {withCredentials: true})
+            .then(res => setOrder(res.data))
+            .catch(err => alert(err))
+    },[])
+
     return (
         <Receipt>
             <Header>Order Receipt</Header>
@@ -63,47 +73,50 @@ export default function ReceiptPage() {
             <TakeAway>-- TAKE AWAY --</TakeAway>
             <Row>
                 <P>Ordered at</P>
-                <P>{
+                <P>
+                    {/* {format(Date(order.createdAt),"dd'-'MM'-'YYY' 'HH':'mm")} */}
+                    {/* {
                     format(
-                        orderContext.orderState.orderTime,
+                        new Date(order.createdAt),
                         "dd'-'MM'-'YYY' 'HH':'mm"
-                    )}
+                    )} */}
                 </P>
             </Row>
             <Row>
                 <P>Pick up time :</P>
-                <P>{
-                    format(
-                        orderContext.orderState.pickupTime,
+                <P>
+                    {/* {console.log(new Date(order.pickupTime).toDay)} */}
+                    {/* {format(
+                        new Date(order.pickupTime),
                         "dd'-'MM'-'YYY' 'HH':'mm"
-                    )}
+                    )} */}
                 </P>
 
             </Row>
             <BoldP>ORDER SUMMERY</BoldP>
-            { orderContext.orderState.orderItems.map(item => 
+            {/* { order.orderItems.map(item => 
                 <Row>
                     <P>{item.name}</P>
                     <P>AUD $ {(item.unitPrice/100).toFixed(2)}</P>
                 </Row>  
-            )}
+            )} */}
             <Hr />
             <Row>
                 <LightP>SUBTOTAL</LightP>
-                <LightP>AUD $ {(orderContext.orderState.subTotal/100).toFixed(2)}</LightP>
+                <LightP>AUD $ {(order.subTotal/100).toFixed(2)}</LightP>
             </Row>
             <Row>
                 <LightP>SERVICE CHARGE</LightP>
-                <LightP>AUD $ {(orderContext.orderState.serviceCharge/100).toFixed(2)}</LightP>
+                <LightP>AUD $ {(order.serviceCharge/100).toFixed(2)}</LightP>
             </Row>
             <Row>
                 <LightP>GST (INCL) 10%</LightP>
-                <LightP>AUD $ {((orderContext.orderState.serviceCharge+orderContext.orderState.subTotal)/1000).toFixed(2)}</LightP>
+                <LightP>AUD $ {((order.serviceCharge + order.subTotal)/1000).toFixed(2)}</LightP>
             </Row>
             <Hr />
             <Row>
                 <BoldP>TOTAL PAYMENT</BoldP>
-                <BoldP>AUD $ {((orderContext.orderState.serviceCharge+orderContext.orderState.subTotal)/100).toFixed(2)}</BoldP>
+                <BoldP>AUD $ {((order.serviceCharge + order.subTotal)/100).toFixed(2)}</BoldP>
             </Row>
             <CenterP>-- Please pay at the counter with this receipt--</CenterP>
         </Receipt>

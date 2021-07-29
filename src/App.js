@@ -76,7 +76,7 @@ function App() {
             </Route>
 
             {/* Route for receipt */}
-            <Route exact path='/receipt'>
+            <Route path='/receipt/:id'>
               <ReceiptPage />
             </Route>
           </OrderContext.Provider>
