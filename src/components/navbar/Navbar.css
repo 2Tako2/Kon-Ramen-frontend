@@ -1,0 +1,144 @@
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    color: #fff;
+    /* overflow: hidden; */
+    width: 100vw;
+    background-color: rgb(187, 19, 19);
+}
+
+.nav-container {
+    width: 100vw;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.logo-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    width: 150px;
+    height: 150px;
+}
+
+.menu-btn {
+    position: absolute;
+    font-size: 40px;
+    bottom: 0;
+    left: 10vw;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #fff;
+}
+
+.nav-links-container{
+    width: 100vw;
+}
+
+.nav-links {
+    width: 90%;
+    max-width: 500px;
+    padding: 30px 0 30px 0;
+    margin: 0 auto;
+    list-style: none;
+    background-color: rgb(187, 19, 19);
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hide-nav{
+    position: absolute;
+    right: -80vw;
+    transition: 0.7s;
+    display: none;
+}
+
+.nav-link {
+    padding: 0;
+    list-style: none;
+    position: relative;
+    width: 220px;
+    height: 50px;
+}
+
+.nav-link a {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-icon{
+    font-size: 2rem;
+    margin: 0 10px;
+}
+
+.nav-link-name{
+    margin: 0;
+    font-size: 0.9rem;
+    width: 120px;
+    text-align: center;
+}
+
+.logout-btn{
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -10% );
+    display: flex;
+}
+
+.logged-in-user-container{
+    max-width: 450px;
+    margin: auto;
+}
+
+.logged-in-user{
+    margin: 0 0 10px 0;
+    text-align: right;
+    padding-right: 20px;
+}
+
+@media screen and (min-width: 500px){
+    .menu-btn{
+        display: none;
+    }
+
+    .nav-links-container{
+        max-width: 1000px;
+        margin: auto;
+        background-color: rgb(187, 19, 19);
+    }
+
+    .nav-links{
+        padding: 10px 0;
+        width: 100%;
+        position: relative;
+        flex-direction: row;
+        height: auto;
+    }
+
+    .nav-link a{
+        flex-direction: column;
+    }
+
+    .logout-btn{
+        flex-direction: column;
+        align-items: center;
+    }
+}
