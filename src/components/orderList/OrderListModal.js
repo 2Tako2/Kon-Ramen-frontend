@@ -20,7 +20,6 @@ export default function OrderListModal(props) {
                 index={index}
                 name={item.name}
                 unitPrice={item.unitPrice}
-                // qty={item.qty}
                 addHandler={() => orderContext.orderDispatch({
                         type: ACTIONS.ADD_ITEM_TO_ORDER,
                         value: {
@@ -57,7 +56,7 @@ export default function OrderListModal(props) {
                     <button
                         className='confirm-btn'
                         onClick={() =>
-                            axios.post('http://localhost:5000/orders/', orderContext.orderState)
+                            axios.post(`${process.env.REACT_APP_BACKEND}/orders/`, orderContext.orderState)
                                 .then(res => alert(res))
                                 .catch(err => alert(err))
                         }

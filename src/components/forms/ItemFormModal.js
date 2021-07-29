@@ -20,7 +20,7 @@ export default function ItemFormModal(props) {
         itemFormData.append('category', categoryContext.categoryState.category)
         itemFormData.append('thumbnail', categoryContext.categoryState.thumbnail)
         
-        axios.post('http://localhost:5000/items', itemFormData)
+        axios.post(`${process.env.REACT_APP_BACKEND}/items`, itemFormData)
             .then( res => {
                 props.closeModal();
                 alert(`Successfully created ${categoryContext.categoryState.name} item`);

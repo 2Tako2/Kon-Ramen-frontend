@@ -31,7 +31,7 @@ function App() {
     const [user, setUser] = useState({'role': ''})
   
     useEffect(() => {
-      axios.get('http://localhost:5000/users/cookie', {withCredentials: true})
+      axios.get('https://konramen.herokuapp.com/users/cookie', {withCredentials: true})
         .then(response => {
           setAuthenticated(true)
           setUser(response.data)
@@ -40,7 +40,7 @@ function App() {
     }, [])
 
     const handleLogout = () => {
-      axios.get('http://localhost:5000/users/logout', {withCredentials: true})
+      axios.get(`${process.env.REACT_APP_BACKEND}/users/logout`, {withCredentials: true})
         .then((res) => {
           window.location = '/';
           setAuthenticated(false);
