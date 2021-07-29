@@ -30,7 +30,7 @@ const Intro = styled.article`
 
 const Section2 = styled.div`
     width: 100vw;
-    height: calc( 100vh - 800px);
+    height: calc( 100vh - 790px);
     background: url(${Background}) no-repeat fixed bottom;
     background-size: cover;
 `;
