@@ -89,9 +89,6 @@ export default function ReceiptPage() {
             {console.log(order.orderItems)}
             {/* {order.orderItems.slice().map(item => console.log(item))} */}
 
-
-
-
             {/* { order.orderItems.map(item => 
                 <Row>
                     <P>{item.name}</P>
