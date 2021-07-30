@@ -11,7 +11,7 @@ import OrderListItem from './OrderListItem.js';
 import PaymentSummary from './PaymentSummary';
 import SpecialInstruction from './SpecialInstruction';
 
-export default function OrderListModal(props) {
+export default function OrderListModal({isOpen, closeModal}) {
     const orderContext = useContext(OrderContext)
 
     const renderItems = orderContext.orderState.orderItems.map((item, index) =>
@@ -48,12 +48,12 @@ export default function OrderListModal(props) {
     }
     return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.closeModal}
+            isOpen={isOpen}
+            onRequestClose={closeModal}
             className='orderList-modal'
             ariaHideApp={false}
         >
-            <button className='close-btn' onClick={props.closeModal}>x</button>
+            <button className='close-btn' onClick={closeModal}>x</button>
 
             <div className="orderList-topSection">
                 <h1 className='orderList-header'>Confirm Order</h1>

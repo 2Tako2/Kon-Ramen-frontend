@@ -101,123 +101,118 @@ const Upload = styled.input`
     margin: 0 5px 10px 5px;
 `;
 
-export function TextInput(props){
+export function TextInput({label, name, onChange, value, placeholder}){
     return (
         <Wrapper>
-            <Label>{props.label}</Label>
-            <Error>{props.errorMsg}</Error>
+            <Label>{label}</Label>
             <TextField 
                 type='text'
-                name={props.name}
-                onChange={props.onChange}
-                value={props.value}
-                placeholder={props.placeholder}
+                name={name}
+                onChange={onChange}
+                value={value}
+                placeholder={placeholder}
                 required
             />
         </Wrapper>
     )
 }
 
-export function PasswordInput(props){
+export function PasswordInput({label, name, min, onChange, placeholder}){
     return (
         <Wrapper>
-            <Label>{props.label}</Label>
-            <Error>{props.errorMsg}</Error>
+            <Label>{label}</Label>
             <TextField 
                 type='password'
-                name={props.name}
-                min={props.min}
-                onChange={props.onChange}
-                placeholder={props.placeholder}
+                name={name}
+                min={min}
+                onChange={onChange}
+                placeholder={placeholder}
                 required
             />
         </Wrapper>
     )
 }
 
-export function NumberInput(props){
+export function NumberInput({label, number, onChange, value, min, max, step, placeholder}){
     return(
         <Wrapper>
-            <Label>{props.label}</Label>
-            <Error>{props.errorMsg}</Error>
+            <Label>{label}</Label>
             <TextField
                 type='number'
-                name={props.number}
-                onChange={props.onChange}
-                value={props.value}
-                min={props.min}
-                max={props.max}
-                step={props.step}
-                placeholder={props.placeholder}
+                name={number}
+                onChange={onChange}
+                value={value}
+                min={min}
+                max={max}
+                step={step}
+                placeholder={placeholder}
                 required
             />
         </Wrapper>
     )
 }
 
-export function EmailInput(props){
+export function EmailInput({label, name, value, onChange, placeholder}){
     return (
         <Wrapper>
-            <Label>{props.label}</Label>
-            <Error>{props.errorMsg}</Error>
+            <Label>{label}</Label>
             <TextField 
                 type='email'
-                name={props.name}
-                value={props.value}
-                onChange={props.onChange}
-                placeholder={props.placeholder}
+                name={name}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
                 required
             />
         </Wrapper>
     )
 }
 
-export function CheckBoxInput(props){
+export function CheckBoxInput({labelLeft, labelRight, value, name, onChange}){
     return (
         <CenterWrapper>
-            <Label>{props.labelLeft}</Label>
-            {props.value ? 
+            <Label>{labelLeft}</Label>
+            {value ? 
                 <CheckBoxField 
                     type='checkbox'
-                    name={props.name}
-                    onChange={props.onChange}
+                    name={name}
+                    onChange={onChange}
                     checked
                 />
                 :
                 <CheckBoxField 
                     type='checkbox'
-                    name={props.name}
-                    onChange={props.onChange}
+                    name={name}
+                    onChange={onChange}
                 />
             }
-            <Label>{props.labelRight}</Label>
+            <Label>{labelRight}</Label>
         </CenterWrapper>
     )
 }
 
-export function FormBtn(props){
+export function FormBtn({value, onClick}){
     return (
         <Button 
             type='submit'
-            value={props.value}
-            onClick={props.onClick}
+            value={value}
+            onClick={onClick}
         />
     )
 }
 
-export function SelectInput(props){
-    const options = props.options.map( option => 
+export function SelectInput({options, label, name, value, onChange}){
+    const options = options.map( option => 
         <Option key={option._id} value={option._id}>{option.name}</Option>    
     )
     
     return(
         <Wrapper>
-            <Label>{props.label}</Label>
-            <Error>{props.errorMsg}</Error>
+            <Label>{label}</Label>
             <Select
-                name={props.name}
-                value={props.value ? props.value : '-- Select --'}
-                onChange={props.onChange}
+                name={name}
+                value={value ? value : '-- Select --'}
+                onChange={onChange}
             >
                 <option disabled>-- Select --</option>
                 {options}
@@ -226,28 +221,28 @@ export function SelectInput(props){
     )
 }
 
-export function TextAreaInput(props){
+export function TextAreaInput({label, name, placeholder, value, onChange}){
     return(
         <Wrapper>
-            <Label>{props.label}</Label>
+            <Label>{label}</Label>
             <TextArea 
-                name={props.name}
-                placeholder={props.placeholder}
-                value={props.value}
-                onChange={props.onChange}
+                name={name}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
             />
         </Wrapper>
     )
 }
 
-export function FileUpload(props){
+export function FileUpload({label, name, onChange}){
     return(
         <Wrapper>
-            <Label>{props.label}</Label>
+            <Label>{label}</Label>
             <Upload
                 type="file"
-                name={props.name}
-                onChange={props.onChange}
+                name={name}
+                onChange={onChange}
             />
         </Wrapper>
     )

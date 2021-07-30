@@ -38,7 +38,7 @@ const H4 = styled.h4`
     margin: 0 0 15px 0;
 `;
 
-export default function PaymentSummary(props) {
+export default function PaymentSummary() {
     const orderContext = useContext(OrderContext);
     const [openDetail, setOpenDetail] = useState(false)
 

@@ -4,31 +4,31 @@ import Modal from 'react-modal';
 import { OrderContext } from '../../App';
 import { ACTIONS } from '../../useReducer/orderReducer';
 
-export default function ItemModal(props) {
+export default function ItemModal({isOpen, closeModal, thumbnail, unitPrice, description, name}) {
     const orderContext = useContext(OrderContext);
 
     return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.closeModal}
+            isOpen={isOpen}
+            onRequestClose={closeModal}
             className='item-modal'
             ariaHideApp={false}
         >
-            <button className='close-btn' onClick={props.closeModal}>x</button>
-            <img className='item-thumbnail' src={props.thumbnail} alt={props.name} />
-            <p className='item-name'>{props.name}</p>
-            <p className='item-price'>AUD $ {(props.unitPrice/100).toFixed(2)}</p>
-            <p className='item-description'>{props.description}</p>
+            <button className='close-btn' onClick={closeModal}>x</button>
+            <img className='item-thumbnail' src={thumbnail} alt={name} />
+            <p className='item-name'>{name}</p>
+            <p className='item-price'>AUD $ {(unitPrice/100).toFixed(2)}</p>
+            <p className='item-description'>{description}</p>
             <div className="item-btn-container">
                 <button
                     className="item-btn-add"
                     onClick={() => {
-                        props.closeModal();
+                        closeModal();
                         orderContext.orderDispatch({
                         type: ACTIONS.ADD_ITEM_TO_ORDER,
                         value: {
-                            name: props.name,
-                            unitPrice: props.unitPrice
+                            name: name,
+                            unitPrice: unitPrice
                         }
                     })}}
                 >

@@ -31,11 +31,11 @@ const Submit = styled.button`
 
 `;
 
-export default function SelectTime(props) {
+export default function SelectTime({submit}) {
     const orderContext= useContext(OrderContext)
 
     return (
-        <TimeForm onSubmit={props.submit}>
+        <TimeForm onSubmit={submit}>
             {/* Date time selection, minimum is 15 min from now, maximum is 7 days from now */}
             <Input
                 type='datetime-local'

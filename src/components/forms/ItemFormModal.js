@@ -7,7 +7,7 @@ import axios from 'axios';
 import { CategoryContext } from '../../App';
 import { CATEGORY_ACTIONS } from '../../useReducer/categoryReducer';
 
-export default function ItemFormModal(props) {
+export default function ItemFormModal({isOpen, closeModal}) {
     const categoryContext = useContext(CategoryContext);
 
     const createItem = (e) => {
@@ -27,7 +27,7 @@ export default function ItemFormModal(props) {
                 {withCredential: true}
             )
                 .then(res => {
-                    props.closeModal()
+                    closeModal()
                     window.location='/admin/menu'
                     alert(`Successfully updated ${categoryContext.categoryState.name} item`);
                 })
@@ -35,7 +35,7 @@ export default function ItemFormModal(props) {
         } else {
             axios.post(`${process.env.REACT_APP_BACKEND}/items`, itemFormData)
                 .then( res => {
-                    props.closeModal();
+                    closeModal();
                     alert(`Successfully created ${categoryContext.categoryState.name} item`);
                 })
                 .catch(err => alert(err));
@@ -44,12 +44,12 @@ export default function ItemFormModal(props) {
 
     return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.closeModal}
+            isOpen={isOpen}
+            onRequestClose={closeModal}
             className='form-modal'
             ariaHideApp={false}
         >
-            <button className='close-btn' onClick={props.closeModal}>x</button>
+            <button className='close-btn' onClick={closeModal}>x</button>
             <header className='modal-header'>{categoryContext.categoryState.editingMode ? 'Edit Item' : 'Create Item'}</header>
             <form className='item-form' onSubmit={createItem}>
                 <CheckBoxInput

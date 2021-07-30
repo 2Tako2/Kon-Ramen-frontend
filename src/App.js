@@ -27,7 +27,7 @@ function App() {
   const [order, orderDispatch] = useReducer(orderReducer, initialOrder);
   const [category, categoryDispatch] = useReducer(categoryReducer, initialCategory);
 
-  ////////////////////////////// User ////////////////////////////////////
+  ////////////////////////////// User section //////////////////////////////////
   
     const [authenticated, setAuthenticated] = useState(false)
     const [user, setUser] = useState({'role': ''})
@@ -51,7 +51,7 @@ function App() {
         })
         .catch(err => alert(err))
     }
-  /////////////////////// End of User ////////////////////////////////////
+  /////////////////////// End of User section /////////////////////////////////
   
   return (
     <OrderContext.Provider
