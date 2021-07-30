@@ -82,7 +82,7 @@ export default function ReceiptPage() {
             <Header>Order Receipt</Header>
             <OrderNumber>Order Number : {order._id.slice(1,5)}</OrderNumber>
             <TakeAway>-- TAKE AWAY --</TakeAway>
-            <Row>
+            {/* <Row>
                 <P>Ordered at :</P>
                 <P>
                     {format(parseISO(`${order.createdAt}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")}
@@ -94,7 +94,7 @@ export default function ReceiptPage() {
                     {format(parseISO(`${order.pickupTime}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")}
                 </P>
 
-            </Row>
+            </Row> */}
             <BoldP>ORDER SUMMERY</BoldP>
 
             { order.orderItems.map(item => 
