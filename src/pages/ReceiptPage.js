@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {format, parseISO} from 'date-fns';
+import {format, parseISO, addMinutes} from 'date-fns';
 import axios from 'axios';
 
 import { useParams } from 'react-router';
@@ -76,6 +76,16 @@ export default function ReceiptPage() {
         // eslint-disable-next-line
     }, [])
 
+    const formatDateTime = (dateTime) => {
+        const a = new Date(dateTime)
+        const b = a.getTimezoneOffset();
+        const c = addMinutes(a, b)
+        // const d = format(parseISO(`${c}`), "dd'-'MM'-'YYY' 'HH':'mm")
+        console.log(format(Date(`${c}`), "dd'-'MM'-'YYY' 'HH':'mm"))
+
+
+        return ''
+    }
 
     return (
         <Receipt>
@@ -85,13 +95,16 @@ export default function ReceiptPage() {
             <Row>
                 <P>Ordered at :</P>
                 <P>
-                {format(parseISO(`${order.createdAt}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")}
+                    {/* {format(parseISO(`${order.createdAt}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")} */}
                 </P>
             </Row>
             <Row>
                 <P>Pick up time :</P>
                 <P>
-                    {format(parseISO(`${order.pickupTime}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")}
+                    {formatDateTime(order.pickupTime)}
+                    {/* {console.log(parseISO(`${order.pickupTime}`.slice(0, -1)))} */}
+                    {/* {console.log(format(parseISO(`${order.pickupTime}`.slice(0, -1)), "dd'-'MM'-'YYY' 'HH':'mm"))} */}
+                    {/* {format(parseISO(`${order.pickupTime}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")} */}
                 </P>
 
             </Row>
