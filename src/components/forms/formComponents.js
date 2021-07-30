@@ -202,7 +202,7 @@ export function FormBtn({value, onClick}){
 }
 
 export function SelectInput({options, label, name, value, onChange}){
-    const options = options.map( option => 
+    const renderOptions = options.map( option => 
         <Option key={option._id} value={option._id}>{option.name}</Option>    
     )
     
@@ -215,7 +215,7 @@ export function SelectInput({options, label, name, value, onChange}){
                 onChange={onChange}
             >
                 <option disabled>-- Select --</option>
-                {options}
+                {renderOptions}
             </Select>
         </Wrapper>
     )
