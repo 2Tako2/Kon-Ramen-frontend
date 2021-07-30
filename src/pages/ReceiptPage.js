@@ -77,26 +77,21 @@ export default function ReceiptPage() {
     }, [])
 
 
-    const formatDateTime = (dateTime) => {
-        return format(parseISO(`${dateTime}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")
-    }
-
     return (
         <Receipt>
-            {console.log(order)}
             <Header>Order Receipt</Header>
             <OrderNumber>Order Number : {order._id.slice(1,5)}</OrderNumber>
             <TakeAway>-- TAKE AWAY --</TakeAway>
             <Row>
                 <P>Ordered at :</P>
                 <P>
-                    {formatDateTime(order.createdAt)}
+                    {format(parseISO(`${order.createdAt}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")}
                 </P>
             </Row>
             <Row>
                 <P>Pick up time :</P>
                 <P>
-                    {formatDateTime(order.pickupTime)}
+                    {format(parseISO(`${order.pickupTime}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")}
                 </P>
 
             </Row>
@@ -126,6 +121,10 @@ export default function ReceiptPage() {
                 <BoldP>TOTAL PAYMENT</BoldP>
                 <BoldP>AUD $ {((order.serviceCharge + order.subTotal)/100).toFixed(2)}</BoldP>
             </Row>
+
+            <BoldP>Special Instruction:</BoldP>
+            <P>{order.instruction}</P>
+            <Hr />
             <CenterP>-- Please pay at the counter with this receipt--</CenterP>
         </Receipt>
     )
