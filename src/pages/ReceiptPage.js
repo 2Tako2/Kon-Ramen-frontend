@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-// import {format} from 'date-fns';
+import {format, parseISO} from 'date-fns';
 import axios from 'axios';
 
 import { useParams } from 'react-router';
@@ -58,7 +58,15 @@ const Hr = styled.hr``;
 
 export default function ReceiptPage() {
     const {id} = useParams();
-    const [order, setOrder] = useState('')
+    const [order, setOrder] = useState({
+        instruction: '',
+        serviceCharge: 0,
+        subTotal: 0,
+        _id: '',
+        pickupTime: [],
+        createdAt: [],
+        orderItems: []
+    })
     
     useEffect(() =>{
         axios.get(`${process.env.REACT_APP_BACKEND}/orders/${id}`, {withCredentials: true})
@@ -68,35 +76,38 @@ export default function ReceiptPage() {
         // eslint-disable-next-line
     }, [])
 
+
+    const formatDateTime = (dateTime) => {
+        return format(parseISO(`${dateTime}`.slice(0,-1)), "dd'-'MM'-'YYY' 'HH':'mm")
+    }
+
     return (
         <Receipt>
+            {console.log(order)}
             <Header>Order Receipt</Header>
-            <OrderNumber>Order Number : 101</OrderNumber>
+            <OrderNumber>Order Number : {order._id.slice(1,5)}</OrderNumber>
             <TakeAway>-- TAKE AWAY --</TakeAway>
             <Row>
-                <P>Ordered at</P>
+                <P>Ordered at :</P>
                 <P>
-                    
-                    {new Date(order.createdAt).toDateString()}
+                    {formatDateTime(order.createdAt)}
                 </P>
             </Row>
             <Row>
                 <P>Pick up time :</P>
                 <P>
-                    {new Date(order.pickupTime).toDateString()}
+                    {formatDateTime(order.pickupTime)}
                 </P>
 
             </Row>
             <BoldP>ORDER SUMMERY</BoldP>
-            {console.log(order.orderItems)}
-            {/* {order.orderItems.slice().map(item => console.log(item))} */}
 
-            {/* { order.orderItems.map(item => 
-                <Row>
+            { order.orderItems.map(item => 
+                <Row key={item._id}>
                     <P>{item.name}</P>
                     <P>AUD $ {(item.unitPrice/100).toFixed(2)}</P>
                 </Row>  
-            )} */}
+            )}
             <Hr />
             <Row>
                 <LightP>SUBTOTAL</LightP>
